@@ -1,0 +1,23 @@
+<svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+	<defs>
+		<image  width="512" height="512" id="img1" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAgAAAAIAAQMAAADOtka5AAAAAXNSR0IB2cksfwAAAANQTFRF////p8QbyAAAAIxJREFUeJztzDENAAAMA6DVv+mJ6NUEBJArRSAQCAQCgUAgEAgEAoFAIBAIBAKBQCAQCAQCgUAgEAgEAoFAIBAIBAKBQCAQCAQCgUAgEAgEAoFAIBAIBAKBQCAQCAQCgUAgEAgEAoFAIBAIBAKBQCAQCAQCgUAgEAgEAoFAIBAIBAKBQCAQCAQCgWA7eMqeAgEiRD3HAAAAAElFTkSuQmCC"/>
+	</defs>
+	<style>
+		tspan { white-space:pre } 
+		.s0 { fill-opacity: .43;fill: #00ff77 } 
+		.s1 { fill: #000000 } 
+		.t2 { font-size: 259px;fill: #00ff77;font-weight: 400;font-family: "DejaVuSans", "DejaVu Sans" } 
+		.t3 { font-size: 259px;fill: #ffea00;font-weight: 400;font-family: "DejaVuSans", "DejaVu Sans" } 
+	</style>
+	<use id="Background" href="#img1" x="0" y="0"/>
+	<path id="Forma 1" fill-rule="evenodd" class="s0" d="m255.5 434c-98.71 0-178.5-79.79-178.5-178.5 0-98.71 79.79-178.5 178.5-178.5 98.71 0 178.5 79.79 178.5 178.5 0 98.71-79.79 178.5-178.5 178.5z"/>
+	<path id="E" class="s1" d="m84.4 351v-188.64h97.79c11.87 0 21.48 9.61 21.48 21.48h-93.75v55.84h89.84c0 11.87-9.62 21.48-21.48 21.48h-68.36v68.36h338.33c0 11.86-9.61 21.48-21.48 21.48z"/>
+	<text id="XCEL" style="transform: matrix(.186,0,0,.186,127.455,312.666)">
+		<tspan x="0" y="0" class="t2">X</tspan><tspan  y="0" class="t2">C</tspan><tspan  y="0" class="t2">E</tspan><tspan  y="0" class="t2">L
+</tspan>
+	</text>
+	<text id="ao" style="transform: matrix(.314,0,0,.314,252.526,317.513)">
+		<tspan x="0" y="0" class="t3">a</tspan><tspan  y="0" class="t3">o
+</tspan>
+	</text>
+</svg>
