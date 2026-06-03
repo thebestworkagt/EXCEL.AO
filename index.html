@@ -45,6 +45,7 @@
             position: sticky;
             top: 0;
             z-index: 100;
+            flex-wrap: wrap;
         }
 
         .logo {
@@ -62,16 +63,23 @@
             text-shadow: 0 0 10px #0ff;
         }
 
+        .nav-links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
         .nav-links a {
             color: rgb(255, 255, 255);
             text-decoration: none;
-            margin: 0 1rem;
+            margin: 0 0.5rem;
             font-weight: 500;
             transition: 0.3s;
             padding: 0.5rem 1rem;
             border-radius: 30px;
             cursor: pointer;
             display: inline-block;
+            font-size: 0.9rem;
         }
 
         .nav-links a:hover, .nav-links a.active {
@@ -171,12 +179,12 @@
 
         .grid-cards {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
             gap: 2rem;
             margin-top: 2rem;
         }
 
-        .card-aula {
+        .card-aula, .material-card, .depoimento-card, .produto-card {
             background: rgba(0, 238, 255, 0.05);
             backdrop-filter: blur(8px);
             border-radius: 20px;
@@ -186,20 +194,62 @@
             animation: fadeInUp 0.6s;
         }
 
-        .card-aula:hover {
+        .card-aula:hover, .material-card:hover, .depoimento-card:hover, .produto-card:hover {
             transform: translateY(-10px);
             border-color: #0ff;
             box-shadow: 0 0 30px rgba(0, 255, 255, 0.3);
         }
 
-        .card-aula h3 {
+        .card-aula h3, .material-card h3, .depoimento-card h3, .produto-card h3 {
             margin-bottom: 0.5rem;
             color: #0ff;
         }
 
-        .card-aula p {
+        .card-aula p, .material-card p, .depoimento-card p, .produto-card p {
             margin-bottom: 1rem;
             color: #ccc;
+        }
+
+        .btn-comprar, .btn-download-material {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(0, 255, 255, 0.1);
+            border: 1px solid #0ff;
+            color: #0ff;
+            padding: 0.6rem 1.5rem;
+            border-radius: 40px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .btn-comprar:hover, .btn-download-material:hover {
+            background: #0ff;
+            color: #000;
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.6);
+            transform: translateY(-2px);
+        }
+
+        .preco {
+            font-size: 1.5rem;
+            color: #0ff;
+            margin: 0.5rem 0;
+            font-weight: bold;
+        }
+
+        .depoimento-autor {
+            margin-top: 1rem;
+            font-style: italic;
+            color: #0ff;
+            text-align: right;
+        }
+
+        .depoimento-estrelas {
+            color: #FFD700;
+            margin-bottom: 0.5rem;
         }
 
         wistia-player {
@@ -219,7 +269,7 @@
             margin: 0 auto;
         }
 
-        .about-grid, .support-tiers {
+        .about-grid, .support-tiers, .materiais-grid, .depoimentos-grid, .loja-grid {
             display: flex;
             gap: 2rem;
             justify-content: center;
@@ -351,12 +401,8 @@
         }
 
         @keyframes rotateBorder {
-            0% {
-                transform: rotate(0deg);
-            }
-            100% {
-                transform: rotate(360deg);
-            }
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
 
         @media (max-width: 768px) {
@@ -367,7 +413,7 @@
                 top: 70px;
                 left: 0;
                 width: 100%;
-                background: rgba(0, 104, 64, 0.911);
+                background: rgba(0, 104, 64, 0.95);
                 backdrop-filter: blur(20px);
                 padding: 1rem;
                 text-align: center;
@@ -409,30 +455,6 @@
         .tab-content.active-tab {
             display: block;
         }
-
-        .btn-download {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            background: rgba(0, 255, 255, 0.1);
-            border: 1px solid #0ff;
-            color: #0ff;
-            padding: 0.6rem 1.5rem;
-            border-radius: 40px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 0.9rem;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            backdrop-filter: blur(4px);
-        }
-
-        .btn-download:hover {
-            background: #0ff;
-            color: #000;
-            box-shadow: 0 0 20px rgba(0, 255, 255, 0.6);
-            transform: translateY(-2px);
-        }
     </style>
 </head>
 <body>
@@ -446,6 +468,9 @@
         <div class="nav-links">
             <a data-tab="menu" class="active"><i class="fas fa-th-large"></i> Menu</a>
             <a data-tab="sobre"><i class="fas fa-user-astronaut"></i> Sobre</a>
+            <a data-tab="materiais"><i class="fas fa-download"></i> Materiais</a>
+            <a data-tab="depoimentos"><i class="fas fa-comment-dots"></i> Depoimentos</a>
+            <a data-tab="loja"><i class="fas fa-store"></i> Loja</a>
             <a data-tab="apoiar"><i class="fas fa-hand-sparkles"></i> Apoiar</a>
         </div>
         <div class="menu-toggle">
@@ -453,6 +478,7 @@
         </div>
     </nav>
 
+    <!-- ABA MENU -->
     <div id="menu" class="tab-content active-tab">
         <header class="hero-futuristic">
             <div class="hero-content">
@@ -473,12 +499,12 @@
         <main class="container">
             <div class="section-title">
                 <h2><i class="fas fa-play-circle"></i> Aulas</h2>
-                <div class="title-glow"></div>
             </div>
             <div id="lista-aulas" class="grid-cards"></div>
         </main>
     </div>
 
+    <!-- ABA SOBRE -->
     <div id="sobre" class="tab-content">
         <main class="container about-container">
             <div class="about-card glass-card">
@@ -496,14 +522,14 @@
                     </div>
                     <div class="about-item">
                         <i class="fas fa-users"></i>
-                        <h3>2+ Alunos</h3>
+                        <h3>+ Alunos</h3>
                         <p>Comunidade ativa e suporte personalizado</p>
                     </div>
                 </div>
 
                 <div class="about-text">
                     <h2><i class="fas fa-quote-left"></i> Minha Jornada</h2>
-                    <p>Olá, sou Agostinho Vasco Dias, apaixonado pelo Excel e assim como os apps abaixo.</p>
+                    <p>Olá, sou Agostinho Vasco Dias, apaixonado pelo Excel.</p>
                     <p>Nessa plataforma aprende de forma <b>100% online</b> e sem dependências.</p>   
                     <p><strong>Qualquer pessoa pode aprender Excel</strong> com a metodologia certa, é isso que ofereço aqui: aulas objetivas, exemplos práticos e suporte contínuo.</p>
                 </div>
@@ -519,6 +545,40 @@
         </main>
     </div>
 
+    <!-- ABA MATERIAIS -->
+    <div id="materiais" class="tab-content">
+        <main class="container">
+            <div class="section-title">
+                <h2><i class="fas fa-download"></i> Materiais Gratuitos</h2>
+                <p>Baixe planilhas e apostilas para praticar</p>
+            </div>
+            <div class="materiais-grid" id="lista-materiais"></div>
+        </main>
+    </div>
+
+    <!-- ABA DEPOIMENTOS -->
+    <div id="depoimentos" class="tab-content">
+        <main class="container">
+            <div class="section-title">
+                <h2><i class="fas fa-comment-dots"></i> O que os alunos dizem</h2>
+                <p>Depoimentos de quem já aprendeu Excel comigo</p>
+            </div>
+            <div class="depoimentos-grid" id="lista-depoimentos"></div>
+        </main>
+    </div>
+
+    <!-- ABA LOJA -->
+    <div id="loja" class="tab-content">
+        <main class="container">
+            <div class="section-title">
+                <h2><i class="fas fa-store"></i> Loja</h2>
+                <p>Adquira cursos e materiais exclusivos</p>
+            </div>
+            <div class="loja-grid" id="lista-produtos"></div>
+        </main>
+    </div>
+
+    <!-- ABA APOIAR -->
     <div id="apoiar" class="tab-content">
         <main class="container support-container">
             <div class="support-card glass-card">
@@ -605,6 +665,9 @@
         const contents = {
             menu: document.getElementById('menu'),
             sobre: document.getElementById('sobre'),
+            materiais: document.getElementById('materiais'),
+            depoimentos: document.getElementById('depoimentos'),
+            loja: document.getElementById('loja'),
             apoiar: document.getElementById('apoiar')
         };
 
@@ -640,8 +703,8 @@
         // ==================== AULAS (WISTIA) ====================
         const aulas = [
             {
-                titulo: "Função DATADIF no Excel",
-                descricao: "Aprenda a calcular diferença entre datas em dias, meses ou anos!",
+                titulo: "📊 Função DATADIF no Excel",
+                descricao: "Aprenda a calcular diferença entre datas em dias, meses ou anos.",
                 wistia_id: "2k1dkmwb40"
             }
         ];
@@ -676,13 +739,110 @@
             });
         }
 
-        // Busca em tempo real
+        // ==================== MATERIAIS (APENAS 1 EXEMPLO) ====================
+        const materiais = [
+            {
+                titulo: "📥 Nome do Material",
+                descricao: "Descrição do que o aluno vai baixar",
+                download: "materiais/arquivo.pdf",
+                tipo: "PDF"
+            }
+        ];
+
+        function renderizarMateriais() {
+            const lista = document.getElementById("lista-materiais");
+            if (!lista) return;
+            
+            lista.innerHTML = "";
+            materiais.forEach(material => {
+                const card = document.createElement("div");
+                card.className = "material-card";
+                card.innerHTML = `
+                    <h3>${material.titulo}</h3>
+                    <p>${material.descricao}</p>
+                    <div style="margin-top: 1rem;">
+                        <a href="${material.download}" class="btn-download-material" download>
+                            <i class="fas fa-download"></i> Baixar ${material.tipo}
+                        </a>
+                    </div>
+                `;
+                lista.appendChild(card);
+            });
+        }
+
+        // ==================== DEPOIMENTOS (APENAS 1 EXEMPLO) ====================
+        const depoimentos = [
+            {
+                nome: "Nome do Aluno",
+                texto: "Escreva aqui o depoimento do aluno.",
+                estrelas: 5,
+                curso: "Nome do curso que ele fez"
+            }
+        ];
+
+        function renderizarDepoimentos() {
+            const lista = document.getElementById("lista-depoimentos");
+            if (!lista) return;
+            
+            lista.innerHTML = "";
+            depoimentos.forEach(depo => {
+                const card = document.createElement("div");
+                card.className = "depoimento-card";
+                let estrelasHTML = "";
+                for (let i = 0; i < depo.estrelas; i++) {
+                    estrelasHTML += '<i class="fas fa-star"></i>';
+                }
+                card.innerHTML = `
+                    <div class="depoimento-estrelas">${estrelasHTML}</div>
+                    <p>"${depo.texto}"</p>
+                    <div class="depoimento-autor">— ${depo.nome} (${depo.curso})</div>
+                `;
+                lista.appendChild(card);
+            });
+        }
+
+        // ==================== LOJA (APENAS 1 EXEMPLO) ====================
+        const produtos = [
+            {
+                titulo: "🎓 Nome do Produto",
+                descricao: "Descrição do que o aluno vai receber",
+                preco: "KZ 0.000",
+                link_pagamento: "https://buy.stripe.com/SEU_LINK_AQUI"
+            }
+        ];
+
+        function renderizarProdutos() {
+            const lista = document.getElementById("lista-produtos");
+            if (!lista) return;
+            
+            lista.innerHTML = "";
+            produtos.forEach(produto => {
+                const card = document.createElement("div");
+                card.className = "produto-card";
+                card.innerHTML = `
+                    <h3>${produto.titulo}</h3>
+                    <p>${produto.descricao}</p>
+                    <div class="preco">${produto.preco}</div>
+                    <div style="margin-top: 1rem;">
+                        <a href="${produto.link_pagamento}" class="btn-comprar" target="_blank" rel="noopener noreferrer">
+                            <i class="fas fa-credit-card"></i> Comprar Agora
+                        </a>
+                    </div>
+                `;
+                lista.appendChild(card);
+            });
+        }
+
+        // ==================== INICIALIZAÇÃO ====================
         const buscaInput = document.getElementById("busca");
         if (buscaInput) {
             buscaInput.addEventListener("input", (e) => renderizarAulas(e.target.value));
         }
         
         renderizarAulas();
+        renderizarMateriais();
+        renderizarDepoimentos();
+        renderizarProdutos();
 
         // ==================== COPIAR IBAN ====================
         const copyBtn = document.getElementById("copyPix");
@@ -707,7 +867,7 @@
             });
         }, { threshold: 0.1 });
 
-        document.querySelectorAll('.card-aula, .about-item, .tier-card').forEach(el => {
+        document.querySelectorAll('.card-aula, .material-card, .depoimento-card, .produto-card, .about-item, .tier-card').forEach(el => {
             el.style.opacity = "0";
             el.style.transform = "translateY(30px)";
             el.style.transition = "all 0.6s";
