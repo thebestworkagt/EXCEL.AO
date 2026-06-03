@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>EXCEL AO</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: radial-gradient(circle at 20% 30%, #01526b, #4e003d);
+            color: #ffffff;
+            line-height: 1.6;
+            cursor: none;
+            overflow-x: hidden;
+        }
+
+        .cursor-glow {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(0, 255, 255, 0.6), transparent);
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transition: transform 0.05s;
+            filter: blur(4px);
+        }
+
+        .glass-nav {
+            background: rgba(10, 10, 20, 0.7);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(0, 255, 255, 0.3);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+        }
+
+        .logo i {
+            color: rgb(0, 240, 20);
+            text-shadow: 0 0 10px rgb(114, 253, 22);
+        }
+
+        .highlight {
+            color: #0ff;
+            text-shadow: 0 0 10px #0ff;
+        }
+
+        .nav-links a {
+            color: rgb(255, 255, 255);
+            text-decoration: none;
+            margin: 0 1rem;
+            font-weight: 500;
+            transition: 0.3s;
+            padding: 0.5rem 1rem;
+            border-radius: 30px;
+            cursor: pointer;
+            display: inline-block;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            background: rgba(0, 255, 255, 0.2);
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.5);
+            color: #0ff;
+        }
+
+        .menu-toggle {
+            display: none;
+            font-size: 1.8rem;
+            cursor: pointer;
+        }
+
+        .hero-futuristic {
+            min-height: 50vh;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 3rem 5%;
+            background: linear-gradient(135deg, rgba(0,0,0,0.8), rgba(0, 255, 255, 0.1));
+            border-bottom: 1px solid rgba(0, 255, 255, 0.2);
+            flex-wrap: wrap;
+        }
+
+        .hero-content {
+            flex: 1;
+        }
+
+        .chip {
+            background: rgba(0, 255, 255, 0.2);
+            display: inline-block;
+            padding: 0.3rem 1rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            margin-bottom: 1rem;
+            backdrop-filter: blur(4px);
+        }
+
+        .glitch-text {
+            font-size: 3.5rem;
+            font-weight: 800;
+        }
+
+        .neon {
+            color: #0ff;
+            text-shadow: 0 0 10px #0ff, 0 0 20px #0ff;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { text-shadow: 0 0 10px #0ff; }
+            50% { text-shadow: 0 0 25px #0ff, 0 0 35px cyan; }
+            100% { text-shadow: 0 0 10px #0ff; }
+        }
+
+        .search-futuristic {
+            margin-top: 2rem;
+            display: flex;
+            align-items: center;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50px;
+            padding: 0.5rem 1rem;
+            border: 1px solid rgba(0,255,255,0.3);
+        }
+
+        .search-futuristic i {
+            margin-right: 0.5rem;
+            color: rgb(0, 170, 71);
+        }
+
+        .search-futuristic input {
+            background: transparent;
+            border: none;
+            color: rgb(0, 255, 76);
+            width: 100%;
+            outline: none;
+            font-size: 1rem;
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 2rem;
+            text-align: center;
+        }
+
+        .stat span {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #0ff;
+        }
+
+        .container {
+            padding: 3rem 5%;
+            min-height: 60vh;
+        }
+
+        .grid-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .card-aula {
+            background: rgba(0, 238, 255, 0.05);
+            backdrop-filter: blur(8px);
+            border-radius: 20px;
+            padding: 1.5rem;
+            border: 2px solid rgb(0, 255, 115);
+            transition: all 0.3s ease;
+            animation: fadeInUp 0.6s;
+        }
+
+        .card-aula:hover {
+            transform: translateY(-10px);
+            border-color: #0ff;
+            box-shadow: 0 0 30px rgba(0, 255, 255, 0.3);
+        }
+
+        .card-aula h3 {
+            margin-bottom: 0.5rem;
+            color: #0ff;
+        }
+
+        .card-aula p {
+            margin-bottom: 1rem;
+            color: #ccc;
+        }
+
+        wistia-player {
+            display: block;
+            margin-top: 1rem;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .glass-card {
+            background: rgba(20, 20, 40, 0.6);
+            backdrop-filter: blur(12px);
+            border-radius: 30px;
+            padding: 2rem;
+            border: 1px solid rgba(0,255,255,0.3);
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .about-grid, .support-tiers {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 2rem 0;
+        }
+
+        .about-item, .tier-card {
+            background: rgba(0,0,0,0.5);
+            padding: 1.5rem;
+            border-radius: 20px;
+            text-align: center;
+            flex: 1;
+            transition: 0.3s;
+            border: 1px solid rgba(0,255,255,0.2);
+        }
+
+        .about-item:hover, .tier-card:hover {
+            transform: scale(1.05);
+            border-color: #0ff;
+            box-shadow: 0 0 20px cyan;
+        }
+
+        .skill-tag {
+            background: rgba(0, 255, 255, 0.2);
+            padding: 0.3rem 1rem;
+            border-radius: 50px;
+            display: inline-block;
+            margin: 0.3rem;
+        }
+
+        .avatar-futuristic {
+            font-size: 4rem;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .pix-area {
+            background: rgba(0,0,0,0.6);
+            border-radius: 20px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            text-align: center;
+        }
+
+        .pix-key-container {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .neon-btn {
+            background: transparent;
+            border: 1px solid #0ff;
+            color: #0ff;
+            padding: 0.5rem 1rem;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .neon-btn:hover {
+            background: #0ff;
+            color: black;
+            box-shadow: 0 0 20px cyan;
+        }
+
+        .footer-futuristic {
+            text-align: center;
+            padding: 2rem;
+            border-top: 1px solid rgba(0,255,255,0.2);
+            margin-top: 3rem;
+        }
+
+        .social-icons {
+            margin-top: 1rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .whatsapp-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            background: rgba(37, 211, 102, 0.15);
+            border: 1px solid #25D366;
+            color: #25D366;
+            padding: 0.5rem 1.2rem;
+            border-radius: 40px;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .whatsapp-link:hover {
+            background: #25D366;
+            color: #000;
+            box-shadow: 0 0 15px #25D366;
+            transform: scale(1.05);
+        }
+
+        .profile-image {
+            display: flex;
+            justify-content: center;
+            margin-top: 1.5rem;
+        }
+
+        .gradient-border {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #0ff, #00ff78, #0ff);
+            padding: 3px;
+            display: inline-block;
+            animation: rotateBorder 3s linear infinite;
+        }
+
+        .gradient-border img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            display: block;
+        }
+
+        @keyframes rotateBorder {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                background: rgba(0, 104, 64, 0.911);
+                backdrop-filter: blur(20px);
+                padding: 1rem;
+                text-align: center;
+            }
+            .nav-links.active {
+                display: flex;
+            }
+            .menu-toggle {
+                display: block;
+            }
+            .hero-futuristic {
+                flex-direction: column;
+                text-align: center;
+            }
+            .glitch-text {
+                font-size: 2rem;
+            }
+            .grid-cards {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeInUp 0.5s;
+        }
+
+        .tab-content.active-tab {
+            display: block;
+        }
+
+        .btn-download {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(0, 255, 255, 0.1);
+            border: 1px solid #0ff;
+            color: #0ff;
+            padding: 0.6rem 1.5rem;
+            border-radius: 40px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            backdrop-filter: blur(4px);
+        }
+
+        .btn-download:hover {
+            background: #0ff;
+            color: #000;
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.6);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <div class="cursor-glow"></div>
+    
+    <nav class="glass-nav">
+        <div class="logo">
+            <i class="fas fa-chart-line"></i>
+            <span><span class="highlight">EXCEL</span>AO</span>
+        </div>
+        <div class="nav-links">
+            <a data-tab="menu" class="active"><i class="fas fa-th-large"></i> Menu</a>
+            <a data-tab="sobre"><i class="fas fa-user-astronaut"></i> Sobre</a>
+            <a data-tab="apoiar"><i class="fas fa-hand-sparkles"></i> Apoiar</a>
+        </div>
+        <div class="menu-toggle">
+            <i class="fas fa-bars"></i>
+        </div>
+    </nav>
+
+    <div id="menu" class="tab-content active-tab">
+        <header class="hero-futuristic">
+            <div class="hero-content">
+                <div class="chip">⚡ Aulas Interativas</div>
+                <h1 class="glitch-text">Domine o <span class="neon">Excel</span></h1>
+                <p>Aprenda com métodos futuristas, do básico ao avançado. Seu portal de conhecimento em planilhas.</p>
+                <div class="search-futuristic">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="busca" placeholder="Buscar aula...">
+                </div>
+            </div>
+            <div class="hero-stats">
+                <div class="stat"><span>10+</span><br>Aulas</div>
+                <div class="stat"><span>24/24</span><br>Acesso</div>
+                <div class="stat"><span>100%</span><br>Prático</div>
+            </div>
+        </header>
+        <main class="container">
+            <div class="section-title">
+                <h2><i class="fas fa-play-circle"></i> Aulas</h2>
+                <div class="title-glow"></div>
+            </div>
+            <div id="lista-aulas" class="grid-cards"></div>
+        </main>
+    </div>
+
+    <div id="sobre" class="tab-content">
+        <main class="container about-container">
+            <div class="about-card glass-card">
+                <div class="avatar-futuristic">
+                    <i class="fas fa-chalkboard-user"></i>
+                </div>
+                <h1>Professor de <span class="neon">Excel</span></h1>
+                <p class="tagline">Transformando dados em conhecimento desde 2024</p>
+                
+                <div class="about-grid">
+                    <div class="about-item">
+                        <i class="fas fa-bolt"></i>
+                        <h3>Metodologia Ativa</h3>
+                        <p>Aulas práticas com projetos reais!</p>
+                    </div>
+                    <div class="about-item">
+                        <i class="fas fa-users"></i>
+                        <h3>2+ Alunos</h3>
+                        <p>Comunidade ativa e suporte personalizado</p>
+                    </div>
+                </div>
+
+                <div class="about-text">
+                    <h2><i class="fas fa-quote-left"></i> Minha Jornada</h2>
+                    <p>Olá, sou Agostinho Vasco Dias, apaixonado pelo Excel e assim como os apps abaixo.</p>
+                    <p>Nessa plataforma aprende de forma <b>100% online</b> e sem dependências.</p>   
+                    <p><strong>Qualquer pessoa pode aprender Excel</strong> com a metodologia certa, é isso que ofereço aqui: aulas objetivas, exemplos práticos e suporte contínuo.</p>
+                </div>
+
+                <div class="skills">
+                    <span class="skill-tag">Excel Avançado</span>
+                    <span class="skill-tag">Power Query</span>    
+                    <span class="skill-tag">Dashboards</span>
+                    <span class="skill-tag">Word</span>
+                    <span class="skill-tag">PowerPoint</span>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div id="apoiar" class="tab-content">
+        <main class="container support-container">
+            <div class="support-card glass-card">
+                <div class="support-icon">
+                    <i class="fas fa-hand-holding-heart"></i>
+                </div>
+                <h1>Ajude o <span class="neon">Projecto</span></h1>
+                <p class="support-sub">Seu apoio mantém as aulas gratuitas e em constante evolução</p>
+
+                <div class="pix-area">
+                    <div class="pix-header">
+                        <i class="fas fa-qrcode"></i>
+                        <h3>IBAN (AO)</h3>
+                    </div>
+                    <div class="pix-key-container">
+                        <code id="pixKey">AO06000500008772602510197</code>
+                        <button id="copyPix" class="neon-btn"><i class="fas fa-copy"></i> Copiar</button>
+                    </div>
+                    <div class="pix-note">Qualquer valor é bem-vindo! ❤️</div>
+                </div>
+
+                <div class="support-tiers">
+                    <div class="tier-card">
+                        <i class="fas fa-mug-hot"></i>
+                        <h3>Café ☕</h3>
+                        <p>KZ 2000</p>
+                    </div>
+                    <div class="tier-card">
+                        <i class="fas fa-rocket"></i>
+                        <h3>Turbo 🚀</h3>
+                        <p>KZ 10.000</p>
+                    </div>
+                    <div class="tier-card">
+                        <i class="fas fa-crown"></i>
+                        <h3>Mestre 👑</h3>
+                        <p>KZ 30.000+</p>
+                    </div>
+                </div>
+
+                <div class="support-message">
+                    <i class="fas fa-heart"></i>
+                    <p>Todo apoio é transformado em novos equipamentos, softwares e tempo para criar aulas ainda melhores. <strong>Obrigado por fazer parte dessa jornada!</strong></p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <footer class="footer-futuristic">
+        <p><i class="fas fa-copyright"></i> <span class="highlight">EXCEL</span>AO</p>
+        <div class="social-icons">
+            <a href="https://wa.me/244926261011" target="_blank" class="whatsapp-link" rel="noopener noreferrer">
+                <i class="fab fa-whatsapp"></i> +244 926 261 011
+            </a>
+        </div>
+        <div class="profile-image">
+            <div class="gradient-border">
+                <img src="Agostinho Agt.jpg" alt="Professor Agostinho">
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://fast.wistia.com/player.js" async></script>
+
+    <script>
+        // ==================== CURSOR GLOW ====================
+        document.addEventListener('mousemove', (e) => {
+            const glow = document.querySelector('.cursor-glow');
+            if (glow) {
+                glow.style.transform = `translate(${e.clientX - 15}px, ${e.clientY - 15}px)`;
+            }
+        });
+
+        // ==================== MENU MOBILE ====================
+        const toggleBtn = document.querySelector('.menu-toggle');
+        const navLinks = document.querySelector('.nav-links');
+        if (toggleBtn) {
+            toggleBtn.addEventListener('click', () => {
+                navLinks.classList.toggle('active');
+            });
+        }
+
+        // ==================== TABS ====================
+        const tabs = document.querySelectorAll('[data-tab]');
+        const contents = {
+            menu: document.getElementById('menu'),
+            sobre: document.getElementById('sobre'),
+            apoiar: document.getElementById('apoiar')
+        };
+
+        function activateTab(tabId) {
+            Object.values(contents).forEach(content => {
+                if (content) content.classList.remove('active-tab');
+            });
+            if (contents[tabId]) contents[tabId].classList.add('active-tab');
+            
+            tabs.forEach(btn => {
+                if (btn.getAttribute('data-tab') === tabId) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+
+            if (tabId === 'menu') {
+                renderizarAulas();
+            }
+        }
+
+        tabs.forEach(tab => {
+            tab.addEventListener('click', (e) => {
+                const tabId = tab.getAttribute('data-tab');
+                activateTab(tabId);
+                if (navLinks.classList.contains('active')) {
+                    navLinks.classList.remove('active');
+                }
+            });
+        });
+
+        // ==================== AULAS (WISTIA) ====================
+        const aulas = [
+            {
+                titulo: "Função DATADIF no Excel",
+                descricao: "Aprenda a calcular diferença entre datas em dias, meses ou anos!",
+                wistia_id: "2k1dkmwb40"
+            }
+        ];
+
+        function renderizarAulas(filtro = "") {
+            const lista = document.getElementById("lista-aulas");
+            if (!lista) return;
+            
+            const buscaInput = document.getElementById("busca");
+            const termoBusca = filtro || (buscaInput ? buscaInput.value : "");
+            
+            lista.innerHTML = "";
+            const filtradas = aulas.filter(a => 
+                a.titulo.toLowerCase().includes(termoBusca.toLowerCase()) ||
+                a.descricao.toLowerCase().includes(termoBusca.toLowerCase())
+            );
+
+            if (filtradas.length === 0) {
+                lista.innerHTML = "<p style='text-align:center;'>Nenhuma aula encontrada</p>";
+                return;
+            }
+
+            filtradas.forEach(aula => {
+                const card = document.createElement("div");
+                card.className = "card-aula";
+                card.innerHTML = `
+                    <h3>${aula.titulo}</h3>
+                    <p>${aula.descricao}</p>
+                    <wistia-player media-id="${aula.wistia_id}"></wistia-player>
+                `;
+                lista.appendChild(card);
+            });
+        }
+
+        // Busca em tempo real
+        const buscaInput = document.getElementById("busca");
+        if (buscaInput) {
+            buscaInput.addEventListener("input", (e) => renderizarAulas(e.target.value));
+        }
+        
+        renderizarAulas();
+
+        // ==================== COPIAR IBAN ====================
+        const copyBtn = document.getElementById("copyPix");
+        if (copyBtn) {
+            copyBtn.addEventListener("click", () => {
+                const pixKey = document.getElementById("pixKey").innerText;
+                navigator.clipboard.writeText(pixKey);
+                copyBtn.innerHTML = '<i class="fas fa-check"></i> Copiado!';
+                setTimeout(() => {
+                    copyBtn.innerHTML = '<i class="fas fa-copy"></i> Copiar';
+                }, 2000);
+            });
+        }
+
+        // ==================== ANIMAÇÕES SCROLL ====================
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = "1";
+                    entry.target.style.transform = "translateY(0)";
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.card-aula, .about-item, .tier-card').forEach(el => {
+            el.style.opacity = "0";
+            el.style.transform = "translateY(30px)";
+            el.style.transition = "all 0.6s";
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
