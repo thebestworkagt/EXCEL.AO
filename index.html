@@ -209,7 +209,7 @@
             color: #ccc;
         }
 
-        .btn-comprar, .btn-download-material, .btn-compartilhar {
+        .btn-comprar, .btn-download-material {
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
@@ -225,7 +225,7 @@
             cursor: pointer;
         }
 
-        .btn-comprar:hover, .btn-download-material:hover, .btn-compartilhar:hover {
+        .btn-comprar:hover, .btn-download-material:hover {
             background: #0ff;
             color: #000;
             box-shadow: 0 0 20px rgba(0, 255, 255, 0.6);
@@ -402,27 +402,6 @@
         @keyframes rotateBorder {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
-        }
-
-        .toast-mensagem {
-            position: fixed;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(0, 255, 255, 0.9);
-            color: #000;
-            padding: 12px 24px;
-            border-radius: 40px;
-            font-weight: bold;
-            z-index: 10000;
-            animation: fadeOut 2s ease forwards;
-            pointer-events: none;
-        }
-
-        @keyframes fadeOut {
-            0% { opacity: 1; transform: translateX(-50%) translateY(0); }
-            70% { opacity: 1; }
-            100% { opacity: 0; transform: translateX(-50%) translateY(-20px); }
         }
 
         @media (max-width: 768px) {
@@ -757,52 +736,9 @@
                     <h3>${aula.titulo}</h3>
                     <p>${aula.descricao}</p>
                     <wistia-player media-id="${aula.wistia_id}"></wistia-player>
-                    <div style="margin-top: 1rem; text-align: right;">
-                        <button onclick="compartilharVideo('${aula.wistia_id}', '${aula.titulo.replace(/'/g, "\\'")}')" class="btn-compartilhar">
-                            <i class="fas fa-share-alt"></i> Compartilhar esta aula
-                        </button>
-                    </div>
                 `;
                 lista.appendChild(card);
             });
-        }
-
-        // ==================== COMPARTILHAR VÍDEO ====================
-        window.compartilharVideo = function(wistia_id, titulo) {
-            const linkCompartilhamento = window.location.href.split('#')[0] + `#aula-${wistia_id}`;
-            
-            if (navigator.share) {
-                navigator.share({
-                    title: titulo,
-                    text: 'Assista esta aula de Excel!',
-                    url: linkCompartilhamento
-                }).catch(() => {
-                    copiarLink(linkCompartilhamento, titulo);
-                });
-            } else {
-                copiarLink(linkCompartilhamento, titulo);
-            }
-        }
-
-        function copiarLink(link, titulo) {
-            const inputTemp = document.createElement('input');
-            inputTemp.value = link;
-            document.body.appendChild(inputTemp);
-            inputTemp.select();
-            document.execCommand('copy');
-            document.body.removeChild(inputTemp);
-            
-            mostrarToast('✅ Link copiado! Agora você pode compartilhar.');
-        }
-
-        function mostrarToast(mensagem) {
-            const toast = document.createElement('div');
-            toast.className = 'toast-mensagem';
-            toast.textContent = mensagem;
-            document.body.appendChild(toast);
-            setTimeout(() => {
-                toast.remove();
-            }, 2000);
         }
 
         // ==================== LINK DIRETO PARA VÍDEO ====================
