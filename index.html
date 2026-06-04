@@ -4,10 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <title>EXCEL AO</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <!-- FONTES: CARREGANDO APENAS OS PESOS NECESSÁRIOS (400, 600, 800) PARA REDUZIR PESO -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <!-- FONT AWESOME: VERSÃO MAIS LEVE E MODERNA -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    
+    <!-- FAVICON -->
+    <link rel="icon" type="image/png" sizes="32x32" href="logo.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="logo.png">
+    
     <style>
         * {
             margin: 0;
@@ -20,20 +25,7 @@
             background: radial-gradient(circle at 20% 30%, #01526b, #4e003d);
             color: #ffffff;
             line-height: 1.6;
-            cursor: none;
             overflow-x: hidden;
-        }
-
-        .cursor-glow {
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(0, 255, 255, 0.6), transparent);
-            position: fixed;
-            pointer-events: none;
-            z-index: 9999;
-            transition: transform 0.05s;
-            filter: blur(4px);
         }
 
         .glass-nav {
@@ -48,6 +40,7 @@
             top: 0;
             z-index: 100;
             flex-wrap: wrap;
+            gap: 1rem;
         }
 
         .logo {
@@ -65,19 +58,20 @@
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
+            gap: 0.5rem;
         }
 
         .nav-links a {
             color: rgb(255, 255, 255);
             text-decoration: none;
-            margin: 0 0.5rem;
             font-weight: 500;
-            transition: 0.3s;
+            transition: all 0.3s ease;
             padding: 0.5rem 1rem;
             border-radius: 30px;
             cursor: pointer;
             display: inline-block;
             font-size: 0.9rem;
+            white-space: nowrap;
         }
 
         .nav-links a:hover, .nav-links a.active {
@@ -90,6 +84,7 @@
             display: none;
             font-size: 1.8rem;
             cursor: pointer;
+            transition: all 0.3s ease;
         }
 
         .hero-futuristic {
@@ -101,10 +96,12 @@
             background: linear-gradient(135deg, rgba(0,0,0,0.8), rgba(0, 255, 255, 0.1));
             border-bottom: 1px solid rgba(0, 255, 255, 0.2);
             flex-wrap: wrap;
+            gap: 2rem;
         }
 
         .hero-content {
             flex: 1;
+            min-width: 250px;
         }
 
         .chip {
@@ -120,6 +117,7 @@
         .glitch-text {
             font-size: 3.5rem;
             font-weight: 800;
+            line-height: 1.2;
         }
 
         .neon {
@@ -142,6 +140,7 @@
             border-radius: 50px;
             padding: 0.5rem 1rem;
             border: 1px solid rgba(0,255,255,0.3);
+            transition: all 0.3s ease;
         }
 
         .search-futuristic i {
@@ -162,6 +161,8 @@
             display: flex;
             gap: 2rem;
             text-align: center;
+            flex-wrap: wrap;
+            justify-content: center;
         }
 
         .stat span {
@@ -177,9 +178,19 @@
 
         .grid-cards {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
             gap: 2rem;
             margin-top: 2rem;
+        }
+
+        /* ESTILO PARA IMAGENS NOS CARDS */
+        .card-image {
+            width: 100%;
+            border-radius: 12px;
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+            display: block;
+            object-fit: cover;
         }
 
         .card-aula, .material-card, .depoimento-card, .produto-card {
@@ -189,7 +200,7 @@
             padding: 1.5rem;
             border: 2px solid rgb(0, 255, 115);
             transition: all 0.3s ease;
-            animation: fadeInUp 0.6s;
+            animation: fadeInUp 0.5s;
             scroll-margin-top: 80px;
         }
 
@@ -256,6 +267,7 @@
             margin-top: 1rem;
             border-radius: 12px;
             overflow: hidden;
+            width: 100%;
         }
 
         .glass-card {
@@ -264,7 +276,7 @@
             border-radius: 30px;
             padding: 2rem;
             border: 1px solid rgba(0,255,255,0.3);
-            max-width: 1000px;
+            max-width: 1200px;
             margin: 0 auto;
         }
 
@@ -282,7 +294,8 @@
             border-radius: 20px;
             text-align: center;
             flex: 1;
-            transition: 0.3s;
+            min-width: 180px;
+            transition: all 0.3s ease;
             border: 1px solid rgba(0,255,255,0.2);
         }
 
@@ -298,6 +311,7 @@
             border-radius: 50px;
             display: inline-block;
             margin: 0.3rem;
+            transition: all 0.2s ease;
         }
 
         .avatar-futuristic {
@@ -329,7 +343,7 @@
             padding: 0.5rem 1rem;
             border-radius: 30px;
             cursor: pointer;
-            transition: 0.3s;
+            transition: all 0.3s ease;
         }
 
         .neon-btn:hover {
@@ -388,7 +402,7 @@
             background: linear-gradient(45deg, #0ff, #00ff78, #0ff);
             padding: 3px;
             display: inline-block;
-            animation: rotateBorder 3s linear infinite;
+            /* ANIMAÇÃO DE ROTAÇÃO REMOVIDA PARA DEIXAR O SITE MAIS LEVE */
         }
 
         .gradient-border img {
@@ -399,9 +413,15 @@
             display: block;
         }
 
-        @keyframes rotateBorder {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        /* --- ESTILOS RESPONSIVOS --- */
+        @media (max-width: 992px) {
+            .glitch-text {
+                font-size: 2.8rem;
+            }
+            .hero-stats {
+                width: 100%;
+                justify-content: space-around;
+            }
         }
 
         @media (max-width: 768px) {
@@ -409,13 +429,15 @@
                 display: none;
                 flex-direction: column;
                 position: absolute;
-                top: 70px;
+                top: 80px;
                 left: 0;
                 width: 100%;
-                background: rgba(0, 104, 64, 0.95);
+                background: rgba(0, 0, 0, 0.95);
                 backdrop-filter: blur(20px);
-                padding: 1rem;
+                padding: 1.5rem;
                 text-align: center;
+                border-radius: 0 0 20px 20px;
+                z-index: 99;
             }
             .nav-links.active {
                 display: flex;
@@ -428,13 +450,34 @@
                 text-align: center;
             }
             .glitch-text {
-                font-size: 2rem;
+                font-size: 2.2rem;
             }
             .grid-cards {
                 grid-template-columns: 1fr;
             }
             .logo img {
                 height: 35px;
+            }
+            .glass-nav {
+                padding: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 2rem 1rem;
+            }
+            .glitch-text {
+                font-size: 1.8rem;
+            }
+            .hero-stats {
+                gap: 1rem;
+            }
+            .stat span {
+                font-size: 1.8rem;
+            }
+            .hero-futuristic {
+                padding: 2rem 1rem;
             }
         }
 
@@ -460,11 +503,10 @@
     </style>
 </head>
 <body>
-    <div class="cursor-glow"></div>
-    
+
     <nav class="glass-nav">
         <div class="logo">
-            <img src="logo.svg" alt="Excel AO Logo">
+        <img src="logo.png" alt="Excel Ao">
         </div>
         <div class="nav-links">
             <a data-tab="menu" class="active"><i class="fas fa-th-large"></i> Menu</a>
@@ -546,7 +588,11 @@
         </main>
     </div>
 
-    <!-- ABA MATERIAIS -->
+    <!-- ==================== ABA MATERIAIS ==================== -->
+    <!-- COMO ADICIONAR IMAGENS: 
+         1. Salve a imagem na mesma pasta do index.html (ex: "apostila.jpg").
+         2. Adicione a linha: <img class="card-image" src="apostila.jpg" alt="Descrição"> 
+            dentro das tags <div class="material-card">, antes do título ou antes do botão. -->
     <div id="materiais" class="tab-content">
         <main class="container">
             <div class="section-title">
@@ -557,7 +603,11 @@
         </main>
     </div>
 
-    <!-- ABA DEPOIMENTOS -->
+    <!-- ==================== ABA DEPOIMENTOS ==================== -->
+    <!-- COMO ADICIONAR IMAGENS (FOTO DO ALUNO):
+         1. Salve a foto do aluno na pasta do site (ex: "foto-joao.jpg").
+         2. Adicione a linha: <img class="card-image" src="foto-joao.jpg" alt="Foto do Aluno">
+            dentro do <div class="depoimento-card">. A imagem aparecerá antes ou depois do texto. -->
     <div id="depoimentos" class="tab-content">
         <main class="container">
             <div class="section-title">
@@ -568,7 +618,11 @@
         </main>
     </div>
 
-    <!-- ABA LOJA -->
+    <!-- ==================== ABA LOJA ==================== -->
+    <!-- COMO ADICIONAR IMAGENS DOS PRODUTOS:
+         1. Prepare as imagens (ex: "curso-excel.jpg", "planilha-controle.jpg").
+         2. Adicione a linha: <img class="card-image" src="curso-excel.jpg" alt="Imagem do Curso">
+            dentro do <div class="produto-card">. A imagem vai aparecer de forma elegante sobre o card. -->
     <div id="loja" class="tab-content">
         <main class="container">
             <div class="section-title">
@@ -644,14 +698,6 @@
     <script src="https://fast.wistia.com/player.js" async></script>
 
     <script>
-        // ==================== CURSOR GLOW ====================
-        document.addEventListener('mousemove', (e) => {
-            const glow = document.querySelector('.cursor-glow');
-            if (glow) {
-                glow.style.transform = `translate(${e.clientX - 15}px, ${e.clientY - 15}px)`;
-            }
-        });
-
         // ==================== MENU MOBILE ====================
         const toggleBtn = document.querySelector('.menu-toggle');
         const navLinks = document.querySelector('.nav-links');
@@ -770,12 +816,16 @@
         window.addEventListener('hashchange', abrirVideoDireto);
 
         // ==================== MATERIAIS ====================
+        // --- INSTRUÇÃO PARA ADICIONAR IMAGEM ---
+        // Para adicionar uma imagem, edite os objetos "materiais" e adicione um campo "imagem".
+        // Exemplo: { titulo: "...", descricao: "...", imagem: "apostila.jpg", ... }
         const materiais = [
             {
                 titulo: "📥 Nome do Material",
                 descricao: "Descrição do que o aluno vai baixar",
                 download: "materiais/arquivo.pdf",
-                tipo: "PDF"
+                tipo: "PDF",
+                imagem: "" // COLOQUE O NOME DA IMAGEM ENTRE ASPAS, EX: "apostila.jpg"
             }
         ];
 
@@ -787,7 +837,12 @@
             materiais.forEach(material => {
                 const card = document.createElement("div");
                 card.className = "material-card";
+                let imagemHTML = '';
+                if (material.imagem && material.imagem !== "") {
+                    imagemHTML = `<img class="card-image" src="${material.imagem}" alt="${material.titulo}">`;
+                }
                 card.innerHTML = `
+                    ${imagemHTML}
                     <h3>${material.titulo}</h3>
                     <p>${material.descricao}</p>
                     <div style="margin-top: 1rem;">
@@ -801,12 +856,16 @@
         }
 
         // ==================== DEPOIMENTOS ====================
+        // --- INSTRUÇÃO PARA ADICIONAR FOTO DO ALUNO ---
+        // Adicione um campo "foto" no objeto do depoimento.
+        // Exemplo: { nome: "João", foto: "foto-joao.jpg", texto: "...", ... }
         const depoimentos = [
             {
                 nome: "Nome do Aluno",
                 texto: "Escreva aqui o depoimento do aluno.",
                 estrelas: 5,
-                curso: "Nome do curso que ele fez"
+                curso: "Nome do curso que ele fez",
+                foto: "" // COLOQUE O NOME DA FOTO ENTRE ASPAS, EX: "aluno-01.jpg"
             }
         ];
 
@@ -822,7 +881,12 @@
                 for (let i = 0; i < depo.estrelas; i++) {
                     estrelasHTML += '<i class="fas fa-star"></i>';
                 }
+                let fotoHTML = '';
+                if (depo.foto && depo.foto !== "") {
+                    fotoHTML = `<img class="card-image" style="width: 80px; height: 80px; border-radius: 50%; margin: 0 auto 1rem auto; object-fit: cover;" src="${depo.foto}" alt="${depo.nome}">`;
+                }
                 card.innerHTML = `
+                    ${fotoHTML}
                     <div class="depoimento-estrelas">${estrelasHTML}</div>
                     <p>"${depo.texto}"</p>
                     <div class="depoimento-autor">— ${depo.nome} (${depo.curso})</div>
@@ -832,12 +896,16 @@
         }
 
         // ==================== LOJA ====================
+        // --- INSTRUÇÃO PARA ADICIONAR IMAGEM DO PRODUTO ---
+        // Adicione um campo "imagem" no objeto do produto.
+        // Exemplo: { titulo: "...", imagem: "curso-excel.jpg", preco: "...", ... }
         const produtos = [
             {
                 titulo: "🎓 Nome do Produto",
                 descricao: "Descrição do que o aluno vai receber",
                 preco: "KZ 0.000",
-                link_pagamento: "https://buy.stripe.com/SEU_LINK_AQUI"
+                link_pagamento: "https://buy.stripe.com/SEU_LINK_AQUI",
+                imagem: "" // COLOQUE O NOME DA IMAGEM ENTRE ASPAS, EX: "produto.jpg"
             }
         ];
 
@@ -849,7 +917,12 @@
             produtos.forEach(produto => {
                 const card = document.createElement("div");
                 card.className = "produto-card";
+                let imagemHTML = '';
+                if (produto.imagem && produto.imagem !== "") {
+                    imagemHTML = `<img class="card-image" src="${produto.imagem}" alt="${produto.titulo}">`;
+                }
                 card.innerHTML = `
+                    ${imagemHTML}
                     <h3>${produto.titulo}</h3>
                     <p>${produto.descricao}</p>
                     <div class="preco">${produto.preco}</div>
@@ -900,7 +973,7 @@
         document.querySelectorAll('.card-aula, .material-card, .depoimento-card, .produto-card, .about-item, .tier-card').forEach(el => {
             el.style.opacity = "0";
             el.style.transform = "translateY(30px)";
-            el.style.transition = "all 0.6s";
+            el.style.transition = "all 0.5s ease";
             observer.observe(el);
         });
     </script>
