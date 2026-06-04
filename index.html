@@ -14,7 +14,23 @@
     <link rel="icon" type="image/png" sizes="16x16" href="logo.png">
     
     <style>
-        * {
+        * 
+        /* Esconde a barra de rolagem no Chrome, Safari e Edge */
+::-webkit-scrollbar {
+    width: 0px;
+    background: transparent;
+}
+
+/* Esconde a barra de rolagem no Firefox */
+* {
+    scrollbar-width: none;
+}
+
+/* Esconde a barra de rolagem no Internet Explorer/Edge antigo */
+body {
+    -ms-overflow-style: none;
+}
+        {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
