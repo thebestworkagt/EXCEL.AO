@@ -14,26 +14,22 @@
     <link rel="icon" type="image/png" sizes="16x16" href="logo.png">
     
     <style>
-        * 
-        /* Esconde a barra de rolagem no Chrome, Safari e Edge */
-::-webkit-scrollbar {
-    width: 0px;
-    background: transparent;
-}
-
-/* Esconde a barra de rolagem no Firefox */
-* {
-    scrollbar-width: none;
-}
-
-/* Esconde a barra de rolagem no Internet Explorer/Edge antigo */
-body {
-    -ms-overflow-style: none;
-}
-        {
+        * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+        }
+
+        /* Esconde a barra de rolagem */
+        ::-webkit-scrollbar {
+            width: 0px;
+            background: transparent;
+        }
+        * {
+            scrollbar-width: none;
+        }
+        body {
+            -ms-overflow-style: none;
         }
 
         body {
@@ -199,14 +195,24 @@ body {
             margin-top: 2rem;
         }
 
-        /* ESTILO PARA IMAGENS NOS CARDS */
+        /* ESTILO PARA IMAGENS NOS CARDS - TAMANHO HUMILDE */
         .card-image {
             width: 100%;
+            max-width: 280px;
+            height: auto;
             border-radius: 12px;
-            margin-top: 1rem;
-            margin-bottom: 1rem;
+            margin: 0 auto 1rem auto;
             display: block;
             object-fit: cover;
+        }
+
+        /* ESTILO ESPECÍFICO PARA IMAGENS DOS MATERIAIS (MAIS HUMILDE AINDA) */
+        .material-card .card-image {
+            max-width: 180px;
+            height: auto;
+            border-radius: 12px;
+            margin: 0 auto 1rem auto;
+            display: block;
         }
 
         .card-aula, .material-card, .depoimento-card, .produto-card {
@@ -418,7 +424,6 @@ body {
             background: linear-gradient(45deg, #0ff, #00ff78, #0ff);
             padding: 3px;
             display: inline-block;
-            /* ANIMAÇÃO DE ROTAÇÃO REMOVIDA PARA DEIXAR O SITE MAIS LEVE */
         }
 
         .gradient-border img {
@@ -477,6 +482,9 @@ body {
             .glass-nav {
                 padding: 1rem;
             }
+            .material-card .card-image {
+                max-width: 140px;
+            }
         }
 
         @media (max-width: 480px) {
@@ -494,6 +502,9 @@ body {
             }
             .hero-futuristic {
                 padding: 2rem 1rem;
+            }
+            .material-card .card-image {
+                max-width: 120px;
             }
         }
 
@@ -605,10 +616,6 @@ body {
     </div>
 
     <!-- ==================== ABA MATERIAIS ==================== -->
-    <!-- COMO ADICIONAR IMAGENS: 
-         1. Salve a imagem na mesma pasta do index.html (ex: "apostila.jpg").
-         2. Adicione a linha: <img class="card-image" src="apostila.jpg" alt="Descrição"> 
-            dentro das tags <div class="material-card">, antes do título ou antes do botão. -->
     <div id="materiais" class="tab-content">
         <main class="container">
             <div class="section-title">
@@ -620,10 +627,6 @@ body {
     </div>
 
     <!-- ==================== ABA DEPOIMENTOS ==================== -->
-    <!-- COMO ADICIONAR IMAGENS (FOTO DO ALUNO):
-         1. Salve a foto do aluno na pasta do site (ex: "foto-joao.jpg").
-         2. Adicione a linha: <img class="card-image" src="foto-joao.jpg" alt="Foto do Aluno">
-            dentro do <div class="depoimento-card">. A imagem aparecerá antes ou depois do texto. -->
     <div id="depoimentos" class="tab-content">
         <main class="container">
             <div class="section-title">
@@ -635,10 +638,6 @@ body {
     </div>
 
     <!-- ==================== ABA LOJA ==================== -->
-    <!-- COMO ADICIONAR IMAGENS DOS PRODUTOS:
-         1. Prepare as imagens (ex: "curso-excel.jpg", "planilha-controle.jpg").
-         2. Adicione a linha: <img class="card-image" src="curso-excel.jpg" alt="Imagem do Curso">
-            dentro do <div class="produto-card">. A imagem vai aparecer de forma elegante sobre o card. -->
     <div id="loja" class="tab-content">
         <main class="container">
             <div class="section-title">
@@ -832,16 +831,13 @@ body {
         window.addEventListener('hashchange', abrirVideoDireto);
 
         // ==================== MATERIAIS ====================
-        // --- INSTRUÇÃO PARA ADICIONAR IMAGEM ---
-        // Para adicionar uma imagem, edite os objetos "materiais" e adicione um campo "imagem".
-        // Exemplo: { titulo: "...", descricao: "...", imagem: "apostila.jpg", ... }
         const materiais = [
             {
                 titulo: "📥 Planilha 01 - Prática",
                 descricao: "Este material serve de apoio para praticar as aulas assistidas junto com o instrutor",
                 download: "Aula 001.xlsx",
                 tipo: "xlsx",
-                imagem: "PLANILHA 01.png" // COLOQUE O NOME DA IMAGEM ENTRE ASPAS, EX: "apostila.jpg"
+                imagem: "PLANILHA 01.png"
             }
         ];
 
@@ -872,16 +868,13 @@ body {
         }
 
         // ==================== DEPOIMENTOS ====================
-        // --- INSTRUÇÃO PARA ADICIONAR FOTO DO ALUNO ---
-        // Adicione um campo "foto" no objeto do depoimento.
-        // Exemplo: { nome: "João", foto: "foto-joao.jpg", texto: "...", ... }
         const depoimentos = [
             {
                 nome: "Nome do Aluno",
                 texto: "Escreva aqui o depoimento do aluno.",
                 estrelas: 5,
                 curso: "Nome do curso que ele fez",
-                foto: "" // COLOQUE O NOME DA FOTO ENTRE ASPAS, EX: "aluno-01.jpg"
+                foto: ""
             }
         ];
 
@@ -912,16 +905,13 @@ body {
         }
 
         // ==================== LOJA ====================
-        // --- INSTRUÇÃO PARA ADICIONAR IMAGEM DO PRODUTO ---
-        // Adicione um campo "imagem" no objeto do produto.
-        // Exemplo: { titulo: "...", imagem: "curso-excel.jpg", preco: "...", ... }
         const produtos = [
             {
                 titulo: "🎓 Nome do Produto",
                 descricao: "Descrição do que o aluno vai receber",
                 preco: "KZ 0.000",
                 link_pagamento: "https://buy.stripe.com/SEU_LINK_AQUI",
-                imagem: "" // COLOQUE O NOME DA IMAGEM ENTRE ASPAS, EX: "produto.jpg"
+                imagem: ""
             }
         ];
 
