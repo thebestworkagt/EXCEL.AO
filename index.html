@@ -831,34 +831,28 @@
             });
         });
 
-        
-        
-        
-    
-        
-        
         // ==================== AULAS (WISTIA) ====================
+        // APENAS AS AULAS 01 E 02 ESTÃO VISÍVEIS NO SITE
+        // A AULA 03 (DATADIF) ESTÁ COMENTADA - PERMANECE NO CÓDIGO MAS NÃO APARECE
         const aulas = [
             {
                 titulo: "📉 Regras para calcular no Excel 01",
                 descricao: "Calcular no Excel é diferente de um cálculo normal, nesse vídeo você aprende como se calcula. Você vai entender as diferenças e nunca mais errar.",
                 wistia_id: "7jjeg312sa"
             },
-
-             {
+            {
                 titulo: "📉 Regras para calcular no Excel 02",
                 descricao: "Acompanhe a parte 1 para entender a parte 2.",
                 wistia_id: "ee7r0ywltb"
-            },
-            
-           // {
-                   
-            //    titulo: "📊 Função DATADIF no Excel",
-             //   descricao: "Aprenda a calcular diferença entre datas em dias, meses ou anos. Esta é uma função muito útil para quem trabalha com controle de prazos, idade, tempo de serviço e muito mais.",
-             //   wistia_id: "2k1dkmwb40"
-          
-           // }
-            
+            }
+            // ==========================================================
+            // AULA 03 - MANTIDA NO CÓDIGO MAS COMENTADA (NÃO VISÍVEL NO SITE)
+            // ==========================================================
+            // {
+            //     titulo: "📊 Função DATADIF no Excel",
+            //     descricao: "Aprenda a calcular diferença entre datas em dias, meses ou anos. Esta é uma função muito útil para quem trabalha com controle de prazos, idade, tempo de serviço e muito mais.",
+            //     wistia_id: "2k1dkmwb40"
+            // }
         ];
 
         // Função para truncar texto (Ler mais)
@@ -958,6 +952,16 @@
 
         window.addEventListener('load', abrirVideoDireto);
         window.addEventListener('hashchange', abrirVideoDireto);
+
+        // ==================== FORÇA CARREGAR PLAYERS WISTIA ====================
+        function carregarPlayersWistia() {
+            if (typeof Wistia !== 'undefined' && Wistia.api) {
+                console.log("Players Wistia carregados com sucesso");
+            } else {
+                setTimeout(carregarPlayersWistia, 500);
+            }
+        }
+        carregarPlayersWistia();
 
         // ==================== MATERIAIS ====================
         const materiais = [
