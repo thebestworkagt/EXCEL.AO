@@ -190,7 +190,7 @@
 
         .grid-cards {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
             gap: 2rem;
             margin-top: 2rem;
         }
@@ -215,7 +215,8 @@
             display: block;
         }
 
-        .card-aula, .material-card, .depoimento-card, .produto-card {
+        /* ESTILOS PARA CARDS DE AULA COM ALTURA PADRONIZADA */
+        .card-aula {
             background: rgba(0, 238, 255, 0.05);
             backdrop-filter: blur(8px);
             border-radius: 20px;
@@ -224,6 +225,74 @@
             transition: all 0.3s ease;
             animation: fadeInUp 0.5s;
             scroll-margin-top: 80px;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        /* TÍTULO DO CARD - FIXO */
+        .card-aula h3 {
+            margin-bottom: 0.75rem;
+            color: #0ff;
+            font-size: 1.2rem;
+            min-height: 3rem;
+        }
+
+        /* DESCRIÇÃO COM "LER MAIS" */
+        .card-aula .descricao-container {
+            flex: 1;
+            margin-bottom: 1rem;
+        }
+
+        .card-aula .descricao-curta {
+            color: #ccc;
+            line-height: 1.5;
+        }
+
+        .card-aula .descricao-completa {
+            display: none;
+            color: #ccc;
+            line-height: 1.5;
+        }
+
+        .card-aula .descricao-completa.visible {
+            display: block;
+        }
+
+        .card-aula .btn-ler-mais {
+            background: none;
+            border: none;
+            color: #0ff;
+            cursor: pointer;
+            font-size: 0.8rem;
+            padding: 0.3rem 0;
+            margin-top: 0.3rem;
+            transition: all 0.3s ease;
+            text-decoration: underline;
+        }
+
+        .card-aula .btn-ler-mais:hover {
+            color: #00ff78;
+        }
+
+        /* PLAYER DO VÍDEO */
+        .card-aula wistia-player {
+            margin-top: 1rem;
+            width: 100%;
+        }
+
+        .material-card, .depoimento-card, .produto-card {
+            background: rgba(0, 238, 255, 0.05);
+            backdrop-filter: blur(8px);
+            border-radius: 20px;
+            padding: 1.5rem;
+            border: 2px solid rgb(0, 255, 115);
+            transition: all 0.3s ease;
+            animation: fadeInUp 0.5s;
+            scroll-margin-top: 80px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
         }
 
         .card-aula:hover, .material-card:hover, .depoimento-card:hover, .produto-card:hover {
@@ -766,15 +835,22 @@
         const aulas = [
             {
                 titulo: "Regras para calcular no Excel 01",
-                descricao: "Calcular no Excel é diferente de um cálculo normal, nesse vídeo você aprende como se calcula.",
+                descricao: "Calcular no Excel é diferente de um cálculo normal, nesse vídeo você aprende como se calcula. Você vai entender as diferenças e nunca mais errar.",
                 wistia_id: "7jjeg312sa"
             },
             {
                 titulo: "📊 Função DATADIF no Excel",
-                descricao: "Aprenda a calcular diferença entre datas em dias, meses ou anos.",
+                descricao: "Aprenda a calcular diferença entre datas em dias, meses ou anos. Esta é uma função muito útil para quem trabalha com controle de prazos, idade, tempo de serviço e muito mais.",
                 wistia_id: "2k1dkmwb40"
             }
         ];
+
+        // Função para truncar texto (Ler mais)
+        function truncarTexto(texto, limite = 100) {
+            if (texto.length <= limite) return { curto: texto, completo: texto, precisaLerMais: false };
+            const curto = texto.substring(0, limite) + "...";
+            return { curto: curto, completo: texto, precisaLerMais: true };
+        }
 
         function renderizarAulas(filtro = "") {
             const lista = document.getElementById("lista-aulas");
@@ -798,13 +874,50 @@
                 const card = document.createElement("div");
                 card.className = "card-aula";
                 card.id = `aula-${aula.wistia_id}`;
+                
+                const textoTruncado = truncarTexto(aula.descricao, 90);
+                
+                let descricaoHTML = '';
+                if (textoTruncado.precisaLerMais) {
+                    descricaoHTML = `
+                        <div class="descricao-container">
+                            <div class="descricao-curta">${textoTruncado.curto}</div>
+                            <div class="descricao-completa">${textoTruncado.completo}</div>
+                            <button class="btn-ler-mais" onclick="toggleDescricao(this)">Ler mais</button>
+                        </div>
+                    `;
+                } else {
+                    descricaoHTML = `
+                        <div class="descricao-container">
+                            <div class="descricao-curta">${aula.descricao}</div>
+                        </div>
+                    `;
+                }
+                
                 card.innerHTML = `
                     <h3>${aula.titulo}</h3>
-                    <p>${aula.descricao}</p>
+                    ${descricaoHTML}
                     <wistia-player media-id="${aula.wistia_id}"></wistia-player>
                 `;
                 lista.appendChild(card);
             });
+        }
+
+        // Função global para toggle do "Ler mais"
+        window.toggleDescricao = function(btn) {
+            const container = btn.parentElement;
+            const curta = container.querySelector('.descricao-curta');
+            const completa = container.querySelector('.descricao-completa');
+            
+            if (completa.classList.contains('visible')) {
+                completa.classList.remove('visible');
+                curta.style.display = 'block';
+                btn.textContent = 'Ler mais';
+            } else {
+                completa.classList.add('visible');
+                curta.style.display = 'none';
+                btn.textContent = 'Ler menos';
+            }
         }
 
         // ==================== LINK DIRETO PARA VÍDEO ====================
