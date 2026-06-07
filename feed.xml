@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+<channel>
+  <title>EXCEL AO - Novas Aulas</title>
+  <link>https://thebestworkagt.github.io/EXCEL.AO/</link>
+  <description>Receba um e-mail sempre que uma nova aula de Excel for publicada!</description>
+  <language>pt</language>
+  
+  <item>
+    <title>📉 Regras para calcular no Excel 01</title>
+    <link>https://thebestworkagt.github.io/EXCEL.AO/#aula-7jjeg312sa</link>
+    <description>Calcular no Excel é diferente de um cálculo normal. Entenda as diferenças e nunca mais erre.</description>
+    <pubDate>2025-01-15 10:00:00</pubDate>
+  </item>
+
+  <item>
+    <title>📉 Regras para calcular no Excel 02</title>
+    <link>https://thebestworkagt.github.io/EXCEL.AO/#aula-ee7r0ywltb</link>
+    <description>Acompanhe a parte 1 para entender a parte 2.</description>
+    <pubDate>2025-01-22 10:00:00</pubDate>
+  </item>
+
+  <!-- ⚠️ PARA ADICIONAR UMA AULA NOVA, COPIE O BLOCO DE ITEM ABAIXO E COLE ACIMA DESTA LINHA -->
+
+</channel>
+</xml>
