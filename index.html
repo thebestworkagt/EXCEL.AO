@@ -1,44 +1,16 @@
 <!DOCTYPE html>
 <html lang="pt">
 
-  <script>
-  // Garante que o OneSignal será carregado
-  window.OneSignalDeferred = window.OneSignalDeferred || [];
-  
-  // Configura o Botão Personalizado
-  OneSignalDeferred.push(async function(OneSignal) {
-    await OneSignal.init({
-      appId: "d88200af-f107-4688-8bb4-a0db14904645",
-      // ATENÇÃO: Ative o prompt personalizado AQUI
-      promptOptions: {
-        customlink: {
-          enabled: true,       // Liga o botão
-          style: "button",     // Aparece como botão
-          size: "medium",      // Tamanho médio
-          color: {
-            button: '#0ff',    // Cor ciano neon
-            text: '#000000'    // Texto preto para contraste
-          },
-          text: {
-            subscribe: "📢 Receber Notificações de Aulas",
-            unsubscribe: "🔕 Cancelar Notificações",
-            explanation: "Receba um alerta instantâneo sempre que uma nova aula for publicada!"
-          },
-          unsubscribeEnabled: true
-        }
-      }
-    });
-  });
-</script>
-
-<!-- COLE AQUI O SEU CÓDIGO ONESIGNAL ANTERIOR -->
 <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
 <script>
   window.OneSignalDeferred = window.OneSignalDeferred || [];
   OneSignalDeferred.push(async function(OneSignal) {
     await OneSignal.init({
-      appId: "d88200af-f107-4688-8bb4-a0db14904645",
-      // O promptOptions já foi definido acima, mas pode ficar vazio aqui
+      appId: "487aec25-435b-471d-9a25-596ee72cf9a7",
+      safari_web_id: "web.onesignal.auto.4dbe0dd2-36c1-4474-980b-740086f7dd0e",
+      notifyButton: {
+        enable: true,
+      },
     });
   });
 </script>
