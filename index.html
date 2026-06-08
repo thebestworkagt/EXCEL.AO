@@ -6,12 +6,16 @@
   window.OneSignalDeferred = window.OneSignalDeferred || [];
   OneSignalDeferred.push(async function(OneSignal) {
     await OneSignal.init({
-      appId: "487aec25-435b-471d-9a25-596ee72cf9a7",
-      serviceWorkerPath: "OneSignalSDKWorker.js",
-      safari_web_id: "web.onesignal.auto.4dbe0dd2-36c1-4474-980b-740086f7dd0e",
+      appId: "COLE_AQUI_O_SEU_APP_ID",
+      serviceWorkerPath: "/EXCEL.AO/OneSignalSDKWorker.js",
+      serviceWorkerParam: { scope: "/EXCEL.AO/" },
       notifyButton: {
         enable: true,
-      },
+        position: 'bottom-right',
+        theme: 'default',
+        size: 'medium',
+        showCredit: false
+      }
     });
   });
 </script>
