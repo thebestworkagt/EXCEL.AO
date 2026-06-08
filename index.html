@@ -22,18 +22,6 @@
             box-sizing: border-box;
         }
 
-        /* Esconde a barra de rolagem */
-        ::-webkit-scrollbar {
-            width: 0px;
-            background: transparent;
-        }
-        * {
-            scrollbar-width: none;
-        }
-        body {
-            -ms-overflow-style: none;
-        }
-
         body {
             font-family: 'Inter', sans-serif;
             background: radial-gradient(circle at 20% 30%, #01526b, #4e003d);
@@ -42,6 +30,7 @@
             overflow-x: hidden;
         }
 
+        /* BARRA DE NAVEGAÇÃO (DESKTOP) */
         .glass-nav {
             background: rgba(10, 10, 20, 0.7);
             backdrop-filter: blur(12px);
@@ -68,6 +57,7 @@
             display: block;
         }
 
+        /* ABAS (DESKTOP) */
         .nav-links {
             display: flex;
             flex-wrap: wrap;
@@ -94,16 +84,66 @@
             color: #0ff;
         }
 
-        .menu-toggle {
-            display: none;
-            font-size: 1.8rem;
+        /* BOTÃO FLUTUANTE (CELULAR) - ESTILO */
+        .fab-menu {
+            position: fixed;
+            bottom: 30px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            background: #0ff;
+            color: #000;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
             cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 255, 255, 0.4);
             transition: all 0.3s ease;
-            color: #0ff;
-            background: none;
+            z-index: 1000;
             border: none;
         }
 
+        .fab-menu:hover {
+            transform: scale(1.1);
+            background: #00ffcc;
+        }
+
+        /* PAINEL DE ABAS FLUTUANTE (CELULAR) */
+        .fab-panel {
+            position: fixed;
+            bottom: 100px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 15px;
+            display: none;
+            flex-direction: column;
+            gap: 10px;
+            z-index: 999;
+            border: 1px solid #0ff;
+            min-width: 180px;
+            text-align: center;
+        }
+
+        .fab-panel a {
+            color: #fff;
+            text-decoration: none;
+            padding: 12px;
+            border-radius: 12px;
+            transition: 0.3s;
+            font-size: 1rem;
+            display: block;
+        }
+
+        .fab-panel a:hover, .fab-panel a.active {
+            background: #0ff;
+            color: #000;
+        }
+
+        /* TUDO QUE ESTÁ ENTRE O HEADER E O RODAPÉ PERMANECE IGUAL */
         .hero-futuristic {
             min-height: 50vh;
             display: flex;
@@ -200,7 +240,6 @@
             margin-top: 2rem;
         }
 
-        /* ESTILO PARA IMAGENS NOS CARDS - TAMANHO HUMILDE */
         .card-image {
             width: 100%;
             max-width: 280px;
@@ -211,7 +250,6 @@
             object-fit: cover;
         }
 
-        /* ESTILO ESPECÍFICO PARA IMAGENS DOS MATERIAIS (MAIS HUMILDE AINDA) */
         .material-card .card-image {
             max-width: 180px;
             height: auto;
@@ -220,7 +258,6 @@
             display: block;
         }
 
-        /* ESTILOS PARA CARDS DE AULA COM ALTURA PADRONIZADA */
         .card-aula {
             background: rgba(0, 238, 255, 0.05);
             backdrop-filter: blur(8px);
@@ -235,7 +272,6 @@
             height: 100%;
         }
 
-        /* TÍTULO DO CARD - FIXO */
         .card-aula h3 {
             margin-bottom: 0.75rem;
             color: #0ff;
@@ -243,7 +279,6 @@
             min-height: 3rem;
         }
 
-        /* DESCRIÇÃO COM "LER MAIS" */
         .card-aula .descricao-container {
             flex: 1;
             margin-bottom: 1rem;
@@ -280,7 +315,6 @@
             color: #00ff78;
         }
 
-        /* PLAYER DO VÍDEO */
         .card-aula wistia-player {
             margin-top: 1rem;
             width: 100%;
@@ -508,54 +542,64 @@
             display: block;
         }
 
-        /* --- ESTILOS RESPONSIVOS --- */
-        @media (max-width: 992px) {
-            .glitch-text {
-                font-size: 2.8rem;
+        /* DESKTOP: botão flutuante e painel ficam invisíveis */
+        .fab-menu, .fab-panel {
+            display: none;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
             }
-            .hero-stats {
-                width: 100%;
-                justify-content: space-around;
+            to {
+                opacity: 1;
+                transform: translateY(0);
             }
         }
 
+        .tab-content {
+            display: none;
+            animation: fadeInUp 0.5s;
+        }
+
+        .tab-content.active-tab {
+            display: block;
+        }
+
+        /* ===== RESPONSIVO CELULAR ===== */
         @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-                flex-direction: column;
-                position: absolute;
-                top: 80px;
-                left: 0;
-                width: 100%;
-                background: rgba(0, 0, 0, 0.95);
-                backdrop-filter: blur(20px);
-                padding: 1.5rem;
-                text-align: center;
-                border-radius: 0 0 20px 20px;
-                z-index: 99;
+            /* Esconde as abas normais no celular */
+            .glass-nav .nav-links {
+                display: none !important;
             }
-            .nav-links.active {
+
+            /* Mostra o botão flutuante no celular */
+            .fab-menu, .fab-panel {
                 display: flex;
             }
-            .menu-toggle {
-                display: block !important;
-            }
+
             .hero-futuristic {
                 flex-direction: column;
                 text-align: center;
             }
+
             .glitch-text {
                 font-size: 2.2rem;
             }
+
             .grid-cards {
                 grid-template-columns: 1fr;
             }
+
             .logo img {
                 height: 35px;
             }
+
             .glass-nav {
                 padding: 1rem;
             }
+
             .material-card .card-image {
                 max-width: 140px;
             }
@@ -581,30 +625,11 @@
                 max-width: 120px;
             }
         }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .tab-content {
-            display: none;
-            animation: fadeInUp 0.5s;
-        }
-
-        .tab-content.active-tab {
-            display: block;
-        }
     </style>
 </head>
 <body>
 
+    <!-- CABEÇALHO E LOGO -->
     <nav class="glass-nav">
         <div class="logo">
             <img src="logo.png" alt="Excel Ao">
@@ -617,12 +642,22 @@
             <a data-tab="loja"><i class="fas fa-store"></i> Loja</a>
             <a data-tab="apoiar"><i class="fas fa-hand-sparkles"></i> Apoiar</a>
         </div>
-        <div class="menu-toggle">
-            <i class="fas fa-bars"></i>
-        </div>
     </nav>
 
-    <!-- ABA MENU -->
+    <!-- BOTÃO FLUTUANTE E PAINEL DE ABAS (CELULAR) -->
+    <div class="fab-menu" id="fabMenu">
+        <i class="fas fa-bars"></i>
+    </div>
+    <div class="fab-panel" id="fabPanel">
+        <a data-tab="menu" class="active"><i class="fas fa-th-large"></i> Menu</a>
+        <a data-tab="sobre"><i class="fas fa-user-astronaut"></i> Sobre</a>
+        <a data-tab="materiais"><i class="fas fa-download"></i> Materiais</a>
+        <a data-tab="depoimentos"><i class="fas fa-comment-dots"></i> Depoimentos</a>
+        <a data-tab="loja"><i class="fas fa-store"></i> Loja</a>
+        <a data-tab="apoiar"><i class="fas fa-hand-sparkles"></i> Apoiar</a>
+    </div>
+
+    <!-- ABA MENU (conteúdo original) -->
     <div id="menu" class="tab-content active-tab">
         <header class="hero-futuristic">
             <div class="hero-content">
@@ -651,7 +686,7 @@
     <!-- BOTÃO DE NOTIFICAÇÃO WEBPUSHR -->
     <div id="webpushr-subscription-button" style="display: flex; justify-content: center; margin: 20px 0;"></div>
 
-    <!-- ABA SOBRE -->
+    <!-- ABA SOBRE (conteúdo original) -->
     <div id="sobre" class="tab-content">
         <main class="container about-container">
             <div class="about-card glass-card">
@@ -660,7 +695,6 @@
                 </div>
                 <h1>Professor de <span class="neon">Excel</span></h1>
                 <p class="tagline">Transformando dados em conhecimento desde 2024</p>
-                
                 <div class="about-grid">
                     <div class="about-item">
                         <i class="fas fa-bolt"></i>
@@ -673,14 +707,12 @@
                         <p>Comunidade ativa e suporte personalizado</p>
                     </div>
                 </div>
-
                 <div class="about-text">
                     <h2><i class="fas fa-quote-left"></i> Biografia</h2>
                     <p>Olá, sou Agostinho Vasco Dias, apaixonado pelo Excel.</p>
                     <p>Nessa plataforma aprende de forma <b>100% online</b> e sem dependências.</p>   
                     <p><strong>Qualquer pessoa pode aprender Excel</strong> com a metodologia certa, é isso que ofereço aqui: aulas objetivas, exemplos práticos e suporte contínuo.</p>
                 </div>
-
                 <div class="skills">
                     <span class="skill-tag">Excel Avançado</span>
                     <span class="skill-tag">Power Query</span>    
@@ -734,7 +766,6 @@
                 </div>
                 <h1>Ajude o <span class="neon">Projecto</span></h1>
                 <p class="support-sub">Seu apoio mantém as aulas gratuitas e em constante evolução</p>
-
                 <div class="pix-area">
                     <div class="pix-header">
                         <i class="fas fa-qrcode"></i>
@@ -746,7 +777,6 @@
                     </div>
                     <div class="pix-note">Qualquer valor é bem-vindo! ❤️</div>
                 </div>
-
                 <div class="support-tiers">
                     <div class="tier-card">
                         <i class="fas fa-mug-hot"></i>
@@ -764,7 +794,6 @@
                         <p>KZ 30.000+</p>
                     </div>
                 </div>
-
                 <div class="support-message">
                     <i class="fas fa-heart"></i>
                     <p>Todo apoio é transformado em novos equipamentos, softwares e tempo para criar aulas ainda melhores. <strong>Obrigado por fazer parte dessa jornada!</strong></p>
@@ -790,12 +819,17 @@
     <script src="https://fast.wistia.com/player.js" async></script>
 
     <script>
-        // ==================== MENU MOBILE ====================
-        const toggleBtn = document.querySelector('.menu-toggle');
-        const navLinks = document.querySelector('.nav-links');
-        if (toggleBtn) {
-            toggleBtn.addEventListener('click', () => {
-                navLinks.classList.toggle('active');
+        // ==================== MENU MOBILE (BOTÃO FLUTUANTE) ====================
+        const fabMenu = document.getElementById('fabMenu');
+        const fabPanel = document.getElementById('fabPanel');
+
+        if (fabMenu && fabPanel) {
+            fabMenu.addEventListener('click', function() {
+                if (fabPanel.style.display === 'flex') {
+                    fabPanel.style.display = 'none';
+                } else {
+                    fabPanel.style.display = 'flex';
+                }
             });
         }
 
@@ -824,6 +858,11 @@
                 }
             });
 
+            // Fecha o painel flutuante no celular após clicar
+            if (fabPanel) {
+                fabPanel.style.display = 'none';
+            }
+
             if (tabId === 'menu') {
                 renderizarAulas();
             }
@@ -833,9 +872,6 @@
             tab.addEventListener('click', (e) => {
                 const tabId = tab.getAttribute('data-tab');
                 activateTab(tabId);
-                if (navLinks.classList.contains('active')) {
-                    navLinks.classList.remove('active');
-                }
             });
         });
 
@@ -853,7 +889,6 @@
             }
         ];
 
-        // Função para truncar texto (Ler mais)
         function truncarTexto(texto, limite = 100) {
             if (texto.length <= limite) return { curto: texto, completo: texto, precisaLerMais: false };
             const curto = texto.substring(0, limite) + "...";
@@ -911,7 +946,6 @@
             });
         }
 
-        // Função global para toggle do "Ler mais"
         window.toggleDescricao = function(btn) {
             const container = btn.parentElement;
             const curta = container.querySelector('.descricao-curta');
@@ -928,7 +962,6 @@
             }
         }
 
-        // ==================== LINK DIRETO PARA VÍDEO ====================
         function abrirVideoDireto() {
             const hash = window.location.hash.substring(1);
             if (hash && hash.startsWith('aula-')) {
@@ -951,7 +984,6 @@
         window.addEventListener('load', abrirVideoDireto);
         window.addEventListener('hashchange', abrirVideoDireto);
 
-        // ==================== FORÇA CARREGAR PLAYERS WISTIA ====================
         function carregarPlayersWistia() {
             if (typeof Wistia !== 'undefined' && Wistia.api) {
                 console.log("Players Wistia carregados com sucesso");
@@ -975,7 +1007,6 @@
         function renderizarMateriais() {
             const lista = document.getElementById("lista-materiais");
             if (!lista) return;
-            
             lista.innerHTML = "";
             materiais.forEach(material => {
                 const card = document.createElement("div");
@@ -1012,7 +1043,6 @@
         function renderizarDepoimentos() {
             const lista = document.getElementById("lista-depoimentos");
             if (!lista) return;
-            
             lista.innerHTML = "";
             depoimentos.forEach(depo => {
                 const card = document.createElement("div");
@@ -1049,7 +1079,6 @@
         function renderizarProdutos() {
             const lista = document.getElementById("lista-produtos");
             if (!lista) return;
-            
             lista.innerHTML = "";
             produtos.forEach(produto => {
                 const card = document.createElement("div");
@@ -1084,7 +1113,6 @@
         renderizarDepoimentos();
         renderizarProdutos();
 
-        // ==================== COPIAR IBAN ====================
         const copyBtn = document.getElementById("copyPix");
         if (copyBtn) {
             copyBtn.addEventListener("click", () => {
@@ -1097,1124 +1125,6 @@
             });
         }
 
-        // ==================== ANIMAÇÕES SCROLL ====================
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = "1";
-                    entry.target.style.transform = "translateY(0)";
-                }
-            });
-        }, { threshold: 0.1 });
-
-        document.querySelectorAll('.card-aula, .material-card, .depoimento-card, .produto-card, .about-item, .tier-card').forEach(el => {
-            el.style.opacity = "0";
-            el.style.transform = "translateY(30px)";
-            el.style.transition = "all 0.5s ease";
-            observer.observe(el);
-        });
-    </script>
-</body>
-</html><!DOCTYPE html>
-<html lang="pt">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>EXCEL AO</title>
-
-    <!-- start webpushr tracking code --> 
-    <script>(function(w,d, s, id) {if(typeof(w.webpushr)!=='undefined') return;w.webpushr=w.webpushr||function(){(w.webpushr.q=w.webpushr.q||[]).push(arguments)};var js, fjs = d.getElementsByTagName(s)[0];js = d.createElement(s); js.id = id;js.async=1;js.src = "https://cdn.webpushr.com/app.min.js";
-    fjs.parentNode.appendChild(js);}(window,document, 'script', 'webpushr-jssdk'));
-    webpushr('setup',{'key':'BMQe-Ku3xtReezvqIAnHEBefA3sGUGsPQiSF7J8YHCdFxAXeaCcnwQpxdMJxzMW9FjpvtSNY5hDKlgceRhXS8Ns' });</script>
-    <!-- end webpushr tracking code -->
-
-    <!-- FAVICON -->
-    <link rel="icon" type="image/png" sizes="32x32" href="logo.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="logo.png">
-    
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        /* Esconde a barra de rolagem */
-        ::-webkit-scrollbar {
-            width: 0px;
-            background: transparent;
-        }
-        * {
-            scrollbar-width: none;
-        }
-        body {
-            -ms-overflow-style: none;
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background: radial-gradient(circle at 20% 30%, #01526b, #4e003d);
-            color: #ffffff;
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-
-        .glass-nav {
-            background: rgba(10, 10, 20, 0.7);
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(0, 255, 255, 0.3);
-            padding: 1rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            flex-wrap: wrap;
-            gap: 1rem;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-        }
-
-        .logo img {
-            height: 45px;
-            width: auto;
-            display: block;
-        }
-
-        .nav-links {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 0.5rem;
-        }
-
-        .nav-links a {
-            color: rgb(255, 255, 255);
-            text-decoration: none;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            padding: 0.5rem 1rem;
-            border-radius: 30px;
-            cursor: pointer;
-            display: inline-block;
-            font-size: 0.9rem;
-            white-space: nowrap;
-        }
-
-        .nav-links a:hover, .nav-links a.active {
-            background: rgba(0, 255, 255, 0.2);
-            box-shadow: 0 0 15px rgba(0, 255, 255, 0.5);
-            color: #0ff;
-        }
-
-        .menu-toggle {
-            display: none;
-            font-size: 1.8rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            color: #0ff;
-            background: none;
-            border: none;
-        }
-
-        .hero-futuristic {
-            min-height: 50vh;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 3rem 5%;
-            background: linear-gradient(135deg, rgba(0,0,0,0.8), rgba(0, 255, 255, 0.1));
-            border-bottom: 1px solid rgba(0, 255, 255, 0.2);
-            flex-wrap: wrap;
-            gap: 2rem;
-        }
-
-        .hero-content {
-            flex: 1;
-            min-width: 250px;
-        }
-
-        .chip {
-            background: rgba(0, 255, 255, 0.2);
-            display: inline-block;
-            padding: 0.3rem 1rem;
-            border-radius: 50px;
-            font-size: 0.8rem;
-            margin-bottom: 1rem;
-            backdrop-filter: blur(4px);
-        }
-
-        .glitch-text {
-            font-size: 3.5rem;
-            font-weight: 800;
-            line-height: 1.2;
-        }
-
-        .neon {
-            color: #0ff;
-            text-shadow: 0 0 10px #0ff, 0 0 20px #0ff;
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0% { text-shadow: 0 0 10px #0ff; }
-            50% { text-shadow: 0 0 25px #0ff, 0 0 35px cyan; }
-            100% { text-shadow: 0 0 10px #0ff; }
-        }
-
-        .search-futuristic {
-            margin-top: 2rem;
-            display: flex;
-            align-items: center;
-            background: rgba(255,255,255,0.1);
-            border-radius: 50px;
-            padding: 0.5rem 1rem;
-            border: 1px solid rgba(0,255,255,0.3);
-            transition: all 0.3s ease;
-        }
-
-        .search-futuristic i {
-            margin-right: 0.5rem;
-            color: rgb(0, 170, 71);
-        }
-
-        .search-futuristic input {
-            background: transparent;
-            border: none;
-            color: rgb(0, 255, 76);
-            width: 100%;
-            outline: none;
-            font-size: 1rem;
-        }
-
-        .hero-stats {
-            display: flex;
-            gap: 2rem;
-            text-align: center;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-
-        .stat span {
-            font-size: 2.5rem;
-            font-weight: 800;
-            color: #0ff;
-        }
-
-        .container {
-            padding: 3rem 5%;
-            min-height: 60vh;
-        }
-
-        .grid-cards {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-
-        /* ESTILO PARA IMAGENS NOS CARDS - TAMANHO HUMILDE */
-        .card-image {
-            width: 100%;
-            max-width: 280px;
-            height: auto;
-            border-radius: 12px;
-            margin: 0 auto 1rem auto;
-            display: block;
-            object-fit: cover;
-        }
-
-        /* ESTILO ESPECÍFICO PARA IMAGENS DOS MATERIAIS (MAIS HUMILDE AINDA) */
-        .material-card .card-image {
-            max-width: 180px;
-            height: auto;
-            border-radius: 12px;
-            margin: 0 auto 1rem auto;
-            display: block;
-        }
-
-        /* ESTILOS PARA CARDS DE AULA COM ALTURA PADRONIZADA */
-        .card-aula {
-            background: rgba(0, 238, 255, 0.05);
-            backdrop-filter: blur(8px);
-            border-radius: 20px;
-            padding: 1.5rem;
-            border: 2px solid rgb(0, 255, 115);
-            transition: all 0.3s ease;
-            animation: fadeInUp 0.5s;
-            scroll-margin-top: 80px;
-            display: flex;
-            flex-direction: column;
-            height: 100%;
-        }
-
-        /* TÍTULO DO CARD - FIXO */
-        .card-aula h3 {
-            margin-bottom: 0.75rem;
-            color: #0ff;
-            font-size: 1.2rem;
-            min-height: 3rem;
-        }
-
-        /* DESCRIÇÃO COM "LER MAIS" */
-        .card-aula .descricao-container {
-            flex: 1;
-            margin-bottom: 1rem;
-        }
-
-        .card-aula .descricao-curta {
-            color: #ccc;
-            line-height: 1.5;
-        }
-
-        .card-aula .descricao-completa {
-            display: none;
-            color: #ccc;
-            line-height: 1.5;
-        }
-
-        .card-aula .descricao-completa.visible {
-            display: block;
-        }
-
-        .card-aula .btn-ler-mais {
-            background: none;
-            border: none;
-            color: #0ff;
-            cursor: pointer;
-            font-size: 0.8rem;
-            padding: 0.3rem 0;
-            margin-top: 0.3rem;
-            transition: all 0.3s ease;
-            text-decoration: underline;
-        }
-
-        .card-aula .btn-ler-mais:hover {
-            color: #00ff78;
-        }
-
-        /* PLAYER DO VÍDEO */
-        .card-aula wistia-player {
-            margin-top: 1rem;
-            width: 100%;
-        }
-
-        .material-card, .depoimento-card, .produto-card {
-            background: rgba(0, 238, 255, 0.05);
-            backdrop-filter: blur(8px);
-            border-radius: 20px;
-            padding: 1.5rem;
-            border: 2px solid rgb(0, 255, 115);
-            transition: all 0.3s ease;
-            animation: fadeInUp 0.5s;
-            scroll-margin-top: 80px;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .card-aula:hover, .material-card:hover, .depoimento-card:hover, .produto-card:hover {
-            transform: translateY(-10px);
-            border-color: #0ff;
-            box-shadow: 0 0 30px rgba(0, 255, 255, 0.3);
-        }
-
-        .card-aula h3, .material-card h3, .depoimento-card h3, .produto-card h3 {
-            margin-bottom: 0.5rem;
-            color: #0ff;
-        }
-
-        .card-aula p, .material-card p, .depoimento-card p, .produto-card p {
-            margin-bottom: 1rem;
-            color: #ccc;
-        }
-
-        .btn-comprar, .btn-download-material {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            background: rgba(0, 255, 255, 0.1);
-            border: 1px solid #0ff;
-            color: #0ff;
-            padding: 0.6rem 1.5rem;
-            border-radius: 40px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 0.9rem;
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-
-        .btn-comprar:hover, .btn-download-material:hover {
-            background: #0ff;
-            color: #000;
-            box-shadow: 0 0 20px rgba(0, 255, 255, 0.6);
-            transform: translateY(-2px);
-        }
-
-        .preco {
-            font-size: 1.5rem;
-            color: #0ff;
-            margin: 0.5rem 0;
-            font-weight: bold;
-        }
-
-        .depoimento-autor {
-            margin-top: 1rem;
-            font-style: italic;
-            color: #0ff;
-            text-align: right;
-        }
-
-        .depoimento-estrelas {
-            color: #FFD700;
-            margin-bottom: 0.5rem;
-        }
-
-        wistia-player {
-            display: block;
-            margin-top: 1rem;
-            border-radius: 12px;
-            overflow: hidden;
-            width: 100%;
-        }
-
-        .glass-card {
-            background: rgba(20, 20, 40, 0.6);
-            backdrop-filter: blur(12px);
-            border-radius: 30px;
-            padding: 2rem;
-            border: 1px solid rgba(0,255,255,0.3);
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .about-grid, .support-tiers, .materiais-grid, .depoimentos-grid, .loja-grid {
-            display: flex;
-            gap: 2rem;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin: 2rem 0;
-        }
-
-        .about-item, .tier-card {
-            background: rgba(0,0,0,0.5);
-            padding: 1.5rem;
-            border-radius: 20px;
-            text-align: center;
-            flex: 1;
-            min-width: 180px;
-            transition: all 0.3s ease;
-            border: 1px solid rgba(0,255,255,0.2);
-        }
-
-        .about-item:hover, .tier-card:hover {
-            transform: scale(1.05);
-            border-color: #0ff;
-            box-shadow: 0 0 20px cyan;
-        }
-
-        .skill-tag {
-            background: rgba(0, 255, 255, 0.2);
-            padding: 0.3rem 1rem;
-            border-radius: 50px;
-            display: inline-block;
-            margin: 0.3rem;
-            transition: all 0.2s ease;
-        }
-
-        .avatar-futuristic {
-            font-size: 4rem;
-            text-align: center;
-            margin-bottom: 1rem;
-        }
-
-        .pix-area {
-            background: rgba(0,0,0,0.6);
-            border-radius: 20px;
-            padding: 1.5rem;
-            margin: 2rem 0;
-            text-align: center;
-        }
-
-        .pix-key-container {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-
-        .neon-btn {
-            background: transparent;
-            border: 1px solid #0ff;
-            color: #0ff;
-            padding: 0.5rem 1rem;
-            border-radius: 30px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .neon-btn:hover {
-            background: #0ff;
-            color: black;
-            box-shadow: 0 0 20px cyan;
-        }
-
-        .footer-futuristic {
-            text-align: center;
-            padding: 2rem;
-            border-top: 1px solid rgba(0,255,255,0.2);
-            margin-top: 3rem;
-        }
-
-        .social-icons {
-            margin-top: 1rem;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .whatsapp-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.6rem;
-            background: rgba(37, 211, 102, 0.15);
-            border: 1px solid #25D366;
-            color: #25D366;
-            padding: 0.5rem 1.2rem;
-            border-radius: 40px;
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 0.9rem;
-            transition: all 0.3s ease;
-        }
-
-        .whatsapp-link:hover {
-            background: #25D366;
-            color: #000;
-            box-shadow: 0 0 15px #25D366;
-            transform: scale(1.05);
-        }
-
-        .profile-image {
-            display: flex;
-            justify-content: center;
-            margin-top: 1.5rem;
-        }
-
-        .gradient-border {
-            width: 70px;
-            height: 70px;
-            border-radius: 50%;
-            background: linear-gradient(45deg, #0ff, #00ff78, #0ff);
-            padding: 3px;
-            display: inline-block;
-        }
-
-        .gradient-border img {
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            object-fit: cover;
-            display: block;
-        }
-
-        /* --- ESTILOS RESPONSIVOS --- */
-        @media (max-width: 992px) {
-            .glitch-text {
-                font-size: 2.8rem;
-            }
-            .hero-stats {
-                width: 100%;
-                justify-content: space-around;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-                flex-direction: column;
-                position: absolute;
-                top: 80px;
-                left: 0;
-                width: 100%;
-                background: rgba(0, 0, 0, 0.95);
-                backdrop-filter: blur(20px);
-                padding: 1.5rem;
-                text-align: center;
-                border-radius: 0 0 20px 20px;
-                z-index: 99;
-            }
-            .nav-links.active {
-                display: flex;
-            }
-            .menu-toggle {
-                display: block !important;
-            }
-            .hero-futuristic {
-                flex-direction: column;
-                text-align: center;
-            }
-            .glitch-text {
-                font-size: 2.2rem;
-            }
-            .grid-cards {
-                grid-template-columns: 1fr;
-            }
-            .logo img {
-                height: 35px;
-            }
-            .glass-nav {
-                padding: 1rem;
-            }
-            .material-card .card-image {
-                max-width: 140px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .container {
-                padding: 2rem 1rem;
-            }
-            .glitch-text {
-                font-size: 1.8rem;
-            }
-            .hero-stats {
-                gap: 1rem;
-            }
-            .stat span {
-                font-size: 1.8rem;
-            }
-            .hero-futuristic {
-                padding: 2rem 1rem;
-            }
-            .material-card .card-image {
-                max-width: 120px;
-            }
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .tab-content {
-            display: none;
-            animation: fadeInUp 0.5s;
-        }
-
-        .tab-content.active-tab {
-            display: block;
-        }
-    </style>
-</head>
-<body>
-
-    <nav class="glass-nav">
-        <div class="logo">
-            <img src="logo.png" alt="Excel Ao">
-        </div>
-        <div class="nav-links">
-            <a data-tab="menu" class="active"><i class="fas fa-th-large"></i> Menu</a>
-            <a data-tab="sobre"><i class="fas fa-user-astronaut"></i> Sobre</a>
-            <a data-tab="materiais"><i class="fas fa-download"></i> Materiais</a>
-            <a data-tab="depoimentos"><i class="fas fa-comment-dots"></i> Depoimentos</a>
-            <a data-tab="loja"><i class="fas fa-store"></i> Loja</a>
-            <a data-tab="apoiar"><i class="fas fa-hand-sparkles"></i> Apoiar</a>
-        </div>
-        <div class="menu-toggle">
-            <i class="fas fa-bars"></i>
-        </div>
-    </nav>
-
-    <!-- ABA MENU -->
-    <div id="menu" class="tab-content active-tab">
-        <header class="hero-futuristic">
-            <div class="hero-content">
-                <div class="chip">⚡ Aulas Interativas</div>
-                <h1 class="glitch-text">Domine o <span class="neon">Excel</span></h1>
-                <p>Aprenda com métodos futuristas, do básico ao avançado. Seu portal de conhecimento em planilhas.</p>
-                <div class="search-futuristic">
-                    <i class="fas fa-search"></i>
-                    <input type="text" id="busca" placeholder="Buscar aula...">
-                </div>
-            </div>
-            <div class="hero-stats">
-                <div class="stat"><span>02+</span><br>Aulas</div>
-                <div class="stat"><span>24/24</span><br>Acesso</div>
-                <div class="stat"><span>100%</span><br>Prático</div>
-            </div>
-        </header>
-        <main class="container">
-            <div class="section-title">
-                <h2><i class="fas fa-play-circle"></i> Aulas Lançadas</h2>
-            </div>
-            <div id="lista-aulas" class="grid-cards"></div>
-        </main>
-    </div>
-
-    <!-- BOTÃO DE NOTIFICAÇÃO WEBPUSHR -->
-    <div id="webpushr-subscription-button" style="display: flex; justify-content: center; margin: 20px 0;"></div>
-
-    <!-- ABA SOBRE -->
-    <div id="sobre" class="tab-content">
-        <main class="container about-container">
-            <div class="about-card glass-card">
-                <div class="avatar-futuristic">
-                    <i class="fas fa-chalkboard-user"></i>
-                </div>
-                <h1>Professor de <span class="neon">Excel</span></h1>
-                <p class="tagline">Transformando dados em conhecimento desde 2024</p>
-                
-                <div class="about-grid">
-                    <div class="about-item">
-                        <i class="fas fa-bolt"></i>
-                        <h3>Metodologia Ativa</h3>
-                        <p>Aulas práticas com projetos reais!</p>
-                    </div>
-                    <div class="about-item">
-                        <i class="fas fa-users"></i>
-                        <h3>+ Alunos</h3>
-                        <p>Comunidade ativa e suporte personalizado</p>
-                    </div>
-                </div>
-
-                <div class="about-text">
-                    <h2><i class="fas fa-quote-left"></i> Biografia</h2>
-                    <p>Olá, sou Agostinho Vasco Dias, apaixonado pelo Excel.</p>
-                    <p>Nessa plataforma aprende de forma <b>100% online</b> e sem dependências.</p>   
-                    <p><strong>Qualquer pessoa pode aprender Excel</strong> com a metodologia certa, é isso que ofereço aqui: aulas objetivas, exemplos práticos e suporte contínuo.</p>
-                </div>
-
-                <div class="skills">
-                    <span class="skill-tag">Excel Avançado</span>
-                    <span class="skill-tag">Power Query</span>    
-                    <span class="skill-tag">Dashboards</span>
-                    <span class="skill-tag">Word</span>
-                    <span class="skill-tag">PowerPoint</span>
-                </div>
-            </div>
-        </main>
-    </div>
-
-    <!-- ==================== ABA MATERIAIS ==================== -->
-    <div id="materiais" class="tab-content">
-        <main class="container">
-            <div class="section-title">
-                <h2><i class="fas fa-download"></i> Materiais Gratuitos</h2>
-                <p>Baixe planilhas e apostilas para praticar</p>
-            </div>
-            <div class="materiais-grid" id="lista-materiais"></div>
-        </main>
-    </div>
-
-    <!-- ==================== ABA DEPOIMENTOS ==================== -->
-    <div id="depoimentos" class="tab-content">
-        <main class="container">
-            <div class="section-title">
-                <h2><i class="fas fa-comment-dots"></i> O que os alunos dizem</h2>
-                <p>Depoimentos de quem já aprendeu Excel comigo</p>
-            </div>
-            <div class="depoimentos-grid" id="lista-depoimentos"></div>
-        </main>
-    </div>
-
-    <!-- ==================== ABA LOJA ==================== -->
-    <div id="loja" class="tab-content">
-        <main class="container">
-            <div class="section-title">
-                <h2><i class="fas fa-store"></i> Loja</h2>
-                <p>Adquira cursos e materiais exclusivos</p>
-            </div>
-            <div class="loja-grid" id="lista-produtos"></div>
-        </main>
-    </div>
-
-    <!-- ABA APOIAR -->
-    <div id="apoiar" class="tab-content">
-        <main class="container support-container">
-            <div class="support-card glass-card">
-                <div class="support-icon">
-                    <i class="fas fa-hand-holding-heart"></i>
-                </div>
-                <h1>Ajude o <span class="neon">Projecto</span></h1>
-                <p class="support-sub">Seu apoio mantém as aulas gratuitas e em constante evolução</p>
-
-                <div class="pix-area">
-                    <div class="pix-header">
-                        <i class="fas fa-qrcode"></i>
-                        <h3>IBAN (AO)</h3>
-                    </div>
-                    <div class="pix-key-container">
-                        <code id="pixKey">AO06000500008772602510197</code>
-                        <button id="copyPix" class="neon-btn"><i class="fas fa-copy"></i> Copiar</button>
-                    </div>
-                    <div class="pix-note">Qualquer valor é bem-vindo! ❤️</div>
-                </div>
-
-                <div class="support-tiers">
-                    <div class="tier-card">
-                        <i class="fas fa-mug-hot"></i>
-                        <h3>Café ☕</h3>
-                        <p>KZ 2000</p>
-                    </div>
-                    <div class="tier-card">
-                        <i class="fas fa-rocket"></i>
-                        <h3>Turbo 🚀</h3>
-                        <p>KZ 10.000</p>
-                    </div>
-                    <div class="tier-card">
-                        <i class="fas fa-crown"></i>
-                        <h3>Mestre 👑</h3>
-                        <p>KZ 30.000+</p>
-                    </div>
-                </div>
-
-                <div class="support-message">
-                    <i class="fas fa-heart"></i>
-                    <p>Todo apoio é transformado em novos equipamentos, softwares e tempo para criar aulas ainda melhores. <strong>Obrigado por fazer parte dessa jornada!</strong></p>
-                </div>
-            </div>
-        </main>
-    </div>
-
-    <footer class="footer-futuristic">
-        <p><i class="fas fa-copyright"></i> <span class="highlight">EXCEL</span>AO</p>
-        <div class="social-icons">
-            <a href="https://wa.me/244926261011" target="_blank" class="whatsapp-link" rel="noopener noreferrer">
-                <i class="fab fa-whatsapp"></i> +244 926 261 011
-            </a>
-        </div>
-        <div class="profile-image">
-            <div class="gradient-border">
-                <img src="Agostinho Agt.jpg" alt="Professor Agostinho">
-            </div>
-        </div>
-    </footer>
-
-    <script src="https://fast.wistia.com/player.js" async></script>
-
-    <script>
-        // ==================== MENU MOBILE ====================
-        const toggleBtn = document.querySelector('.menu-toggle');
-        const navLinks = document.querySelector('.nav-links');
-        if (toggleBtn) {
-            toggleBtn.addEventListener('click', () => {
-                navLinks.classList.toggle('active');
-            });
-        }
-
-        // ==================== TABS ====================
-        const tabs = document.querySelectorAll('[data-tab]');
-        const contents = {
-            menu: document.getElementById('menu'),
-            sobre: document.getElementById('sobre'),
-            materiais: document.getElementById('materiais'),
-            depoimentos: document.getElementById('depoimentos'),
-            loja: document.getElementById('loja'),
-            apoiar: document.getElementById('apoiar')
-        };
-
-        function activateTab(tabId) {
-            Object.values(contents).forEach(content => {
-                if (content) content.classList.remove('active-tab');
-            });
-            if (contents[tabId]) contents[tabId].classList.add('active-tab');
-            
-            tabs.forEach(btn => {
-                if (btn.getAttribute('data-tab') === tabId) {
-                    btn.classList.add('active');
-                } else {
-                    btn.classList.remove('active');
-                }
-            });
-
-            if (tabId === 'menu') {
-                renderizarAulas();
-            }
-        }
-
-        tabs.forEach(tab => {
-            tab.addEventListener('click', (e) => {
-                const tabId = tab.getAttribute('data-tab');
-                activateTab(tabId);
-                if (navLinks.classList.contains('active')) {
-                    navLinks.classList.remove('active');
-                }
-            });
-        });
-
-        // ==================== AULAS (WISTIA) ====================
-        const aulas = [
-            {
-                titulo: "📉 Regras para calcular no Excel 01",
-                descricao: "Calcular no Excel é diferente de um cálculo normal, nesse vídeo você aprende como se calcula. Você vai entender as diferenças e nunca mais errar.",
-                wistia_id: "7jjeg312sa"
-            },
-            {
-                titulo: "📉 Regras para calcular no Excel 02",
-                descricao: "Acompanhe a parte 1 para entender a parte 2.",
-                wistia_id: "ee7r0ywltb"
-            }
-        ];
-
-        // Função para truncar texto (Ler mais)
-        function truncarTexto(texto, limite = 100) {
-            if (texto.length <= limite) return { curto: texto, completo: texto, precisaLerMais: false };
-            const curto = texto.substring(0, limite) + "...";
-            return { curto: curto, completo: texto, precisaLerMais: true };
-        }
-
-        function renderizarAulas(filtro = "") {
-            const lista = document.getElementById("lista-aulas");
-            if (!lista) return;
-            
-            const buscaInput = document.getElementById("busca");
-            const termoBusca = filtro || (buscaInput ? buscaInput.value : "");
-            
-            lista.innerHTML = "";
-            const filtradas = aulas.filter(a => 
-                a.titulo.toLowerCase().includes(termoBusca.toLowerCase()) ||
-                a.descricao.toLowerCase().includes(termoBusca.toLowerCase())
-            );
-
-            if (filtradas.length === 0) {
-                lista.innerHTML = "<p style='text-align:center;'>Nenhuma aula encontrada</p>";
-                return;
-            }
-
-            filtradas.forEach(aula => {
-                const card = document.createElement("div");
-                card.className = "card-aula";
-                card.id = `aula-${aula.wistia_id}`;
-                
-                const textoTruncado = truncarTexto(aula.descricao, 90);
-                
-                let descricaoHTML = '';
-                if (textoTruncado.precisaLerMais) {
-                    descricaoHTML = `
-                        <div class="descricao-container">
-                            <div class="descricao-curta">${textoTruncado.curto}</div>
-                            <div class="descricao-completa">${textoTruncado.completo}</div>
-                            <button class="btn-ler-mais" onclick="toggleDescricao(this)">Ler mais</button>
-                        </div>
-                    `;
-                } else {
-                    descricaoHTML = `
-                        <div class="descricao-container">
-                            <div class="descricao-curta">${aula.descricao}</div>
-                        </div>
-                    `;
-                }
-                
-                card.innerHTML = `
-                    <h3>${aula.titulo}</h3>
-                    ${descricaoHTML}
-                    <wistia-player media-id="${aula.wistia_id}"></wistia-player>
-                `;
-                lista.appendChild(card);
-            });
-        }
-
-        // Função global para toggle do "Ler mais"
-        window.toggleDescricao = function(btn) {
-            const container = btn.parentElement;
-            const curta = container.querySelector('.descricao-curta');
-            const completa = container.querySelector('.descricao-completa');
-            
-            if (completa.classList.contains('visible')) {
-                completa.classList.remove('visible');
-                curta.style.display = 'block';
-                btn.textContent = 'Ler mais';
-            } else {
-                completa.classList.add('visible');
-                curta.style.display = 'none';
-                btn.textContent = 'Ler menos';
-            }
-        }
-
-        // ==================== LINK DIRETO PARA VÍDEO ====================
-        function abrirVideoDireto() {
-            const hash = window.location.hash.substring(1);
-            if (hash && hash.startsWith('aula-')) {
-                const videoElement = document.getElementById(hash);
-                if (videoElement) {
-                    activateTab('menu');
-                    setTimeout(() => {
-                        videoElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                        videoElement.style.borderColor = '#ff00ff';
-                        videoElement.style.boxShadow = '0 0 30px #ff00ff';
-                        setTimeout(() => {
-                            videoElement.style.borderColor = '';
-                            videoElement.style.boxShadow = '';
-                        }, 2000);
-                    }, 300);
-                }
-            }
-        }
-
-        window.addEventListener('load', abrirVideoDireto);
-        window.addEventListener('hashchange', abrirVideoDireto);
-
-        // ==================== FORÇA CARREGAR PLAYERS WISTIA ====================
-        function carregarPlayersWistia() {
-            if (typeof Wistia !== 'undefined' && Wistia.api) {
-                console.log("Players Wistia carregados com sucesso");
-            } else {
-                setTimeout(carregarPlayersWistia, 500);
-            }
-        }
-        carregarPlayersWistia();
-
-        // ==================== MATERIAIS ====================
-        const materiais = [
-            {
-                titulo: "📥 Planilha 01 - Prática",
-                descricao: "Este material serve de apoio para praticar as aulas assistidas junto com o instrutor",
-                download: "Aula 001.xlsx",
-                tipo: "xlsx",
-                imagem: "PLANILHA 01.png"
-            }
-        ];
-
-        function renderizarMateriais() {
-            const lista = document.getElementById("lista-materiais");
-            if (!lista) return;
-            
-            lista.innerHTML = "";
-            materiais.forEach(material => {
-                const card = document.createElement("div");
-                card.className = "material-card";
-                let imagemHTML = '';
-                if (material.imagem && material.imagem !== "") {
-                    imagemHTML = `<img class="card-image" src="${material.imagem}" alt="${material.titulo}">`;
-                }
-                card.innerHTML = `
-                    ${imagemHTML}
-                    <h3>${material.titulo}</h3>
-                    <p>${material.descricao}</p>
-                    <div style="margin-top: 1rem;">
-                        <a href="${material.download}" class="btn-download-material" download>
-                            <i class="fas fa-download"></i> Baixar ${material.tipo}
-                        </a>
-                    </div>
-                `;
-                lista.appendChild(card);
-            });
-        }
-
-        // ==================== DEPOIMENTOS ====================
-        const depoimentos = [
-            {
-                nome: "Nome do Aluno",
-                texto: "Escreva aqui o depoimento do aluno.",
-                estrelas: 5,
-                curso: "Nome do curso que ele fez",
-                foto: ""
-            }
-        ];
-
-        function renderizarDepoimentos() {
-            const lista = document.getElementById("lista-depoimentos");
-            if (!lista) return;
-            
-            lista.innerHTML = "";
-            depoimentos.forEach(depo => {
-                const card = document.createElement("div");
-                card.className = "depoimento-card";
-                let estrelasHTML = "";
-                for (let i = 0; i < depo.estrelas; i++) {
-                    estrelasHTML += '<i class="fas fa-star"></i>';
-                }
-                let fotoHTML = '';
-                if (depo.foto && depo.foto !== "") {
-                    fotoHTML = `<img class="card-image" style="width: 80px; height: 80px; border-radius: 50%; margin: 0 auto 1rem auto; object-fit: cover;" src="${depo.foto}" alt="${depo.nome}">`;
-                }
-                card.innerHTML = `
-                    ${fotoHTML}
-                    <div class="depoimento-estrelas">${estrelasHTML}</div>
-                    <p>"${depo.texto}"</p>
-                    <div class="depoimento-autor">— ${depo.nome} (${depo.curso})</div>
-                `;
-                lista.appendChild(card);
-            });
-        }
-
-        // ==================== LOJA ====================
-        const produtos = [
-            {
-                titulo: "🎓 Nome do Produto",
-                descricao: "Descrição do que o aluno vai receber",
-                preco: "KZ 0.000",
-                link_pagamento: "https://buy.stripe.com/SEU_LINK_AQUI",
-                imagem: ""
-            }
-        ];
-
-        function renderizarProdutos() {
-            const lista = document.getElementById("lista-produtos");
-            if (!lista) return;
-            
-            lista.innerHTML = "";
-            produtos.forEach(produto => {
-                const card = document.createElement("div");
-                card.className = "produto-card";
-                let imagemHTML = '';
-                if (produto.imagem && produto.imagem !== "") {
-                    imagemHTML = `<img class="card-image" src="${produto.imagem}" alt="${produto.titulo}">`;
-                }
-                card.innerHTML = `
-                    ${imagemHTML}
-                    <h3>${produto.titulo}</h3>
-                    <p>${produto.descricao}</p>
-                    <div class="preco">${produto.preco}</div>
-                    <div style="margin-top: 1rem;">
-                        <a href="${produto.link_pagamento}" class="btn-comprar" target="_blank" rel="noopener noreferrer">
-                            <i class="fas fa-credit-card"></i> Comprar Agora
-                        </a>
-                    </div>
-                `;
-                lista.appendChild(card);
-            });
-        }
-
-        // ==================== INICIALIZAÇÃO ====================
-        const buscaInput = document.getElementById("busca");
-        if (buscaInput) {
-            buscaInput.addEventListener("input", (e) => renderizarAulas(e.target.value));
-        }
-        
-        renderizarAulas();
-        renderizarMateriais();
-        renderizarDepoimentos();
-        renderizarProdutos();
-
-        // ==================== COPIAR IBAN ====================
-        const copyBtn = document.getElementById("copyPix");
-        if (copyBtn) {
-            copyBtn.addEventListener("click", () => {
-                const pixKey = document.getElementById("pixKey").innerText;
-                navigator.clipboard.writeText(pixKey);
-                copyBtn.innerHTML = '<i class="fas fa-check"></i> Copiado!';
-                setTimeout(() => {
-                    copyBtn.innerHTML = '<i class="fas fa-copy"></i> Copiar';
-                }, 2000);
-            });
-        }
-
-        // ==================== ANIMAÇÕES SCROLL ====================
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
