@@ -30,7 +30,6 @@
             overflow-x: hidden;
         }
 
-        /* BARRA DE NAVEGAÇÃO (DESKTOP) */
         .glass-nav {
             background: rgba(10, 10, 20, 0.7);
             backdrop-filter: blur(12px);
@@ -57,7 +56,6 @@
             display: block;
         }
 
-        /* ABAS (DESKTOP) */
         .nav-links {
             display: flex;
             flex-wrap: wrap;
@@ -84,7 +82,6 @@
             color: #0ff;
         }
 
-        /* BOTÃO FLUTUANTE (CELULAR) - ESTILO */
         .fab-menu {
             position: fixed;
             bottom: 30px;
@@ -110,7 +107,6 @@
             background: #00ffcc;
         }
 
-        /* PAINEL DE ABAS FLUTUANTE (CELULAR) */
         .fab-panel {
             position: fixed;
             bottom: 100px;
@@ -143,7 +139,6 @@
             color: #000;
         }
 
-        /* TUDO QUE ESTÁ ENTRE O HEADER E O RODAPÉ PERMANECE IGUAL */
         .hero-futuristic {
             min-height: 50vh;
             display: flex;
@@ -240,22 +235,22 @@
             margin-top: 2rem;
         }
 
+        /* ===== NOVA GRELHA 2x2 PARA MATERIAIS ===== */
+        .materiais-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
         .card-image {
             width: 100%;
-            max-width: 280px;
+            max-width: 120px;
             height: auto;
             border-radius: 12px;
             margin: 0 auto 1rem auto;
             display: block;
             object-fit: cover;
-        }
-
-        .material-card .card-image {
-            max-width: 180px;
-            height: auto;
-            border-radius: 12px;
-            margin: 0 auto 1rem auto;
-            display: block;
         }
 
         .card-aula {
@@ -320,7 +315,41 @@
             width: 100%;
         }
 
-        .material-card, .depoimento-card, .produto-card {
+        /* ESTILO DOS CARDS DE MATERIAIS (com altura controlada) */
+        .material-card {
+            background: rgba(0, 238, 255, 0.05);
+            backdrop-filter: blur(8px);
+            border-radius: 20px;
+            padding: 1rem;
+            border: 2px solid rgb(0, 255, 115);
+            transition: all 0.3s ease;
+            animation: fadeInUp 0.5s;
+            scroll-margin-top: 80px;
+            display: flex;
+            flex-direction: column;
+            height: auto;
+            min-height: 240px;
+        }
+
+        .material-card .card-image {
+            max-width: 80px;
+            margin-bottom: 0.5rem;
+        }
+
+        .material-card h3 {
+            font-size: 1rem;
+            margin-bottom: 0.3rem;
+            color: #0ff;
+        }
+
+        .material-card p {
+            font-size: 0.8rem;
+            margin-bottom: 0.5rem;
+            color: #ccc;
+            line-height: 1.3;
+        }
+
+        .depoimento-card, .produto-card {
             background: rgba(0, 238, 255, 0.05);
             backdrop-filter: blur(8px);
             border-radius: 20px;
@@ -335,35 +364,28 @@
         }
 
         .card-aula:hover, .material-card:hover, .depoimento-card:hover, .produto-card:hover {
-            transform: translateY(-10px);
+            transform: translateY(-5px);
             border-color: #0ff;
             box-shadow: 0 0 30px rgba(0, 255, 255, 0.3);
-        }
-
-        .card-aula h3, .material-card h3, .depoimento-card h3, .produto-card h3 {
-            margin-bottom: 0.5rem;
-            color: #0ff;
-        }
-
-        .card-aula p, .material-card p, .depoimento-card p, .produto-card p {
-            margin-bottom: 1rem;
-            color: #ccc;
         }
 
         .btn-comprar, .btn-download-material {
             display: inline-flex;
             align-items: center;
+            justify-content: center;
             gap: 0.5rem;
             background: rgba(0, 255, 255, 0.1);
             border: 1px solid #0ff;
             color: #0ff;
-            padding: 0.6rem 1.5rem;
+            padding: 0.4rem 0.8rem;
             border-radius: 40px;
             text-decoration: none;
             font-weight: 600;
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             transition: all 0.3s ease;
             cursor: pointer;
+            width: 100%;
+            text-align: center;
         }
 
         .btn-comprar:hover, .btn-download-material:hover {
@@ -374,22 +396,25 @@
         }
 
         .preco {
-            font-size: 1.5rem;
+            font-size: 1.2rem;
             color: #0ff;
             margin: 0.5rem 0;
             font-weight: bold;
+            text-align: center;
         }
 
         .depoimento-autor {
-            margin-top: 1rem;
+            margin-top: 0.5rem;
             font-style: italic;
             color: #0ff;
             text-align: right;
+            font-size: 0.8rem;
         }
 
         .depoimento-estrelas {
             color: #FFD700;
             margin-bottom: 0.5rem;
+            font-size: 0.8rem;
         }
 
         wistia-player {
@@ -410,7 +435,7 @@
             margin: 0 auto;
         }
 
-        .about-grid, .support-tiers, .materiais-grid, .depoimentos-grid, .loja-grid {
+        .about-grid, .support-tiers, .depoimentos-grid, .loja-grid {
             display: flex;
             gap: 2rem;
             justify-content: center;
@@ -442,6 +467,7 @@
             display: inline-block;
             margin: 0.3rem;
             transition: all 0.2s ease;
+            font-size: 0.8rem;
         }
 
         .avatar-futuristic {
@@ -542,7 +568,6 @@
             display: block;
         }
 
-        /* DESKTOP: botão flutuante e painel ficam invisíveis */
         .fab-menu, .fab-panel {
             display: none;
         }
@@ -567,14 +592,11 @@
             display: block;
         }
 
-        /* ===== RESPONSIVO CELULAR ===== */
         @media (max-width: 768px) {
-            /* Esconde as abas normais no celular */
             .glass-nav .nav-links {
                 display: none !important;
             }
 
-            /* Mostra o botão flutuante no celular */
             .fab-menu, .fab-panel {
                 display: flex;
             }
@@ -592,16 +614,17 @@
                 grid-template-columns: 1fr;
             }
 
+            /* No celular, materiais-grid vira 1 coluna */
+            .materiais-grid {
+                grid-template-columns: 1fr;
+            }
+
             .logo img {
                 height: 35px;
             }
 
             .glass-nav {
                 padding: 1rem;
-            }
-
-            .material-card .card-image {
-                max-width: 140px;
             }
         }
 
@@ -621,15 +644,11 @@
             .hero-futuristic {
                 padding: 2rem 1rem;
             }
-            .material-card .card-image {
-                max-width: 120px;
-            }
         }
     </style>
 </head>
 <body>
 
-    <!-- CABEÇALHO E LOGO -->
     <nav class="glass-nav">
         <div class="logo">
             <img src="logo.png" alt="Excel Ao">
@@ -644,7 +663,6 @@
         </div>
     </nav>
 
-    <!-- BOTÃO FLUTUANTE E PAINEL DE ABAS (CELULAR) -->
     <div class="fab-menu" id="fabMenu">
         <i class="fas fa-bars"></i>
     </div>
@@ -657,7 +675,6 @@
         <a data-tab="apoiar"><i class="fas fa-hand-sparkles"></i> Apoiar</a>
     </div>
 
-    <!-- ABA MENU (conteúdo original) -->
     <div id="menu" class="tab-content active-tab">
         <header class="hero-futuristic">
             <div class="hero-content">
@@ -683,10 +700,8 @@
         </main>
     </div>
 
-    <!-- BOTÃO DE NOTIFICAÇÃO WEBPUSHR -->
     <div id="webpushr-subscription-button" style="display: flex; justify-content: center; margin: 20px 0;"></div>
 
-    <!-- ABA SOBRE (conteúdo original) -->
     <div id="sobre" class="tab-content">
         <main class="container about-container">
             <div class="about-card glass-card">
@@ -724,7 +739,6 @@
         </main>
     </div>
 
-    <!-- ==================== ABA MATERIAIS ==================== -->
     <div id="materiais" class="tab-content">
         <main class="container">
             <div class="section-title">
@@ -735,7 +749,6 @@
         </main>
     </div>
 
-    <!-- ==================== ABA DEPOIMENTOS ==================== -->
     <div id="depoimentos" class="tab-content">
         <main class="container">
             <div class="section-title">
@@ -746,7 +759,6 @@
         </main>
     </div>
 
-    <!-- ==================== ABA LOJA ==================== -->
     <div id="loja" class="tab-content">
         <main class="container">
             <div class="section-title">
@@ -757,7 +769,6 @@
         </main>
     </div>
 
-    <!-- ABA APOIAR -->
     <div id="apoiar" class="tab-content">
         <main class="container support-container">
             <div class="support-card glass-card">
@@ -819,7 +830,6 @@
     <script src="https://fast.wistia.com/player.js" async></script>
 
     <script>
-        // ==================== MENU MOBILE (BOTÃO FLUTUANTE) ====================
         const fabMenu = document.getElementById('fabMenu');
         const fabPanel = document.getElementById('fabPanel');
 
@@ -833,7 +843,6 @@
             });
         }
 
-        // ==================== TABS ====================
         const tabs = document.querySelectorAll('[data-tab]');
         const contents = {
             menu: document.getElementById('menu'),
@@ -858,7 +867,6 @@
                 }
             });
 
-            // Fecha o painel flutuante no celular após clicar
             if (fabPanel) {
                 fabPanel.style.display = 'none';
             }
@@ -875,7 +883,6 @@
             });
         });
 
-        // ==================== AULAS (WISTIA) ====================
         const aulas = [
             {
                 titulo: "📉 Regras para calcular no Excel 01",
@@ -993,23 +1000,21 @@
         }
         carregarPlayersWistia();
 
-        // ==================== MATERIAIS ====================
         const materiais = [
             {
                 titulo: "📥 Planilha 01 - Prática",
-                descricao: "Este material serve de apoio para praticar as aulas assistidas junto com o instrutor",
+                descricao: "Material de apoio para praticar",
                 download: "Aula 001.xlsx",
                 tipo: "xlsx",
                 imagem: "PLANILHA 01.png"
             },
             {
                 titulo: "📥 Planilha 02 - Tabela",
-                descricao: "Baixe o material para resolver os problemas mostrados no vídeo da aula sobre tabelas",
+                descricao: "Resolva os problemas da aula",
                 download: "Aula 002.xlsx",
                 tipo: "xlsx",
                 imagem: "PLANILHA 02.png"
             }
-            
         ];
 
         function renderizarMateriais() {
@@ -1027,9 +1032,9 @@
                     ${imagemHTML}
                     <h3>${material.titulo}</h3>
                     <p>${material.descricao}</p>
-                    <div style="margin-top: 1rem;">
+                    <div style="margin-top: 0.5rem;">
                         <a href="${material.download}" class="btn-download-material" download>
-                            <i class="fas fa-download"></i> Baixar ${material.tipo}
+                            <i class="fas fa-download"></i> Baixar
                         </a>
                     </div>
                 `;
@@ -1037,7 +1042,6 @@
             });
         }
 
-        // ==================== DEPOIMENTOS ====================
         const depoimentos = [
             {
                 nome: "Nome do Aluno",
@@ -1073,7 +1077,6 @@
             });
         }
 
-        // ==================== LOJA ====================
         const produtos = [
             {
                 titulo: "🎓 Nome do Produto",
@@ -1110,7 +1113,6 @@
             });
         }
 
-        // ==================== INICIALIZAÇÃO ====================
         const buscaInput = document.getElementById("busca");
         if (buscaInput) {
             buscaInput.addEventListener("input", (e) => renderizarAulas(e.target.value));
