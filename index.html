@@ -695,6 +695,7 @@
         <a data-tab="apoiar"><i class="fas fa-hand-sparkles"></i> Apoiar</a>
     </div>
 
+    <!-- ==================== ABA MENU (COM FORMULÁRIO NO FINAL) ==================== -->
     <div id="menu" class="tab-content active-tab">
         <header class="hero-futuristic">
             <div class="hero-content">
@@ -717,10 +718,43 @@
                 <h2><i class="fas fa-play-circle"></i> Aulas Lançadas</h2>
             </div>
             <div id="lista-aulas" class="grid-cards"></div>
+            
+            <!-- =================================================== -->
+            <!-- FORMULÁRIO DE INSCRIÇÃO (NETLIFY FORMS)             -->
+            <!-- Colocado no FINAL da aba MENU                       -->
+            <!-- =================================================== -->
+            <div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid rgba(0, 255, 255, 0.3); text-align: center;">
+                <h3 style="color: #0ff; margin-bottom: 0.5rem;">📬 Receba novidades por e-mail</h3>
+                <p style="color: #ccc; margin-bottom: 1.5rem;">Inscreva-se para ser avisado sempre que uma nova aula for publicada!</p>
+                
+                <form name="newsletter" method="POST" data-netlify="true" netlify-honeypot="bot-field" style="max-width: 400px; margin: 0 auto;">
+                    <input type="hidden" name="form-name" value="newsletter" />
+                    
+                    <!-- Campo escondido anti-spam -->
+                    <p style="display:none;">
+                        <label>Não preencher: <input name="bot-field" /></label>
+                    </p>
+                    
+                    <div style="display: flex; flex-direction: column; gap: 0.8rem;">
+                        <label for="email" style="text-align: left; color: #fff;">📧 Seu e-mail:</label>
+                        <input type="email" name="email" id="email" placeholder="exemplo@email.com" required style="padding: 0.7rem; border-radius: 8px; border: 1px solid #0ff; background: rgba(0,0,0,0.3); color: #fff; font-size: 1rem;">
+                        
+                        <label for="nome" style="text-align: left; color: #fff;">👤 Seu nome (opcional):</label>
+                        <input type="text" name="nome" id="nome" placeholder="Seu nome" style="padding: 0.7rem; border-radius: 8px; border: 1px solid #0ff; background: rgba(0,0,0,0.3); color: #fff; font-size: 1rem;">
+                        
+                        <button type="submit" style="padding: 0.8rem; border-radius: 40px; border: none; background: #0ff; color: #000; font-weight: bold; font-size: 1rem; cursor: pointer; transition: all 0.3s ease;">Inscrever-me</button>
+                    </div>
+                </form>
+                <p style="font-size: 0.8rem; color: #888; margin-top: 1rem;">🔒 Seu e-mail está seguro. Não compartilhamos com terceiros.</p>
+            </div>
+            <!-- =================================================== -->
+            <!-- FIM DO FORMULÁRIO DE INSCRIÇÃO                      -->
+            <!-- =================================================== -->
+            
         </main>
     </div>
 
-    <!-- NOVA ABA: ARTIGOS -->
+    <!-- ==================== ABA ARTIGOS ==================== -->
     <div id="artigos" class="tab-content">
         <main class="container">
             <div class="section-title">
@@ -731,8 +765,7 @@
         </main>
     </div>
 
-    <!-- <div id="webpushr-subscription-button" style="display: flex; justify-content: center; margin: 20px 0;"></div> -->
-
+    <!-- ==================== ABA SOBRE ==================== -->
     <div id="sobre" class="tab-content">
         <main class="container about-container">
             <div class="about-card glass-card">
@@ -770,6 +803,7 @@
         </main>
     </div>
 
+    <!-- ==================== ABA MATERIAIS ==================== -->
     <div id="materiais" class="tab-content">
         <main class="container">
             <div class="section-title">
@@ -780,6 +814,7 @@
         </main>
     </div>
 
+    <!-- ==================== ABA DEPOIMENTOS ==================== -->
     <div id="depoimentos" class="tab-content">
         <main class="container">
             <div class="section-title">
@@ -790,6 +825,7 @@
         </main>
     </div>
 
+    <!-- ==================== ABA LOJA ==================== -->
     <div id="loja" class="tab-content">
         <main class="container">
             <div class="section-title">
@@ -800,6 +836,7 @@
         </main>
     </div>
 
+    <!-- ==================== ABA APOIAR ==================== -->
     <div id="apoiar" class="tab-content">
         <main class="container support-container">
             <div class="support-card glass-card">
@@ -885,7 +922,6 @@
             apoiar: document.getElementById('apoiar')
         };
 
-        // ==================== FUNÇÃO PRINCIPAL ====================
         function activateTab(tabId) {
             Object.values(contents).forEach(content => {
                 if (content) content.classList.remove('active-tab');
@@ -909,13 +945,11 @@
             }
         }
 
-        // ==================== FUNÇÃO PARA ATUALIZAR A URL ====================
         function atualizarUrl(tabId) {
             const newUrl = window.location.origin + '/' + tabId;
             window.history.pushState({ tab: tabId }, '', newUrl);
         }
 
-        // ==================== EVENTO DE CLIQUE NAS ABAS ====================
         tabs.forEach(tab => {
             tab.addEventListener('click', (e) => {
                 const tabId = tab.getAttribute('data-tab');
@@ -924,20 +958,13 @@
             });
         });
 
-        // ==================== LER URL E ABRIR ABA CORRETA ====================
         function abrirAbaPorUrl() {
             let path = window.location.pathname;
             let abaId = path.replace(/^\//, '').split('/')[0];
-            
-            // Remove possíveis extensões ou parâmetros
             abaId = abaId.replace(/\.html$/, '').replace(/\?.*$/, '');
-            
-            // Se estiver vazio ou for o nome do repositório, abre o menu
             if (abaId === '' || abaId === 'EXCEL.AO' || abaId === 'index.html') {
                 abaId = 'menu';
             }
-            
-            // Verifica se a aba existe
             const abasValidas = ['menu', 'sobre', 'artigos', 'materiais', 'depoimentos', 'loja', 'apoiar'];
             if (abasValidas.includes(abaId)) {
                 activateTab(abaId);
@@ -948,12 +975,10 @@
 
         window.addEventListener('load', abrirAbaPorUrl);
 
-        // ==================== BOTÃO VOLTAR DO NAVEGADOR ====================
         window.addEventListener('popstate', function(event) {
             if (event.state && event.state.tab) {
                 activateTab(event.state.tab);
             } else {
-                // Se não houver estado, tenta ler da URL
                 let path = window.location.pathname;
                 let abaId = path.replace(/^\//, '').split('/')[0];
                 if (abaId === '' || abaId === 'EXCEL.AO' || abaId === 'index.html') {
@@ -968,7 +993,6 @@
             }
         });
 
-        // ==================== AULAS (WISTIA) ====================
         const aulas = [
             {
                 titulo: "📉 Regras para calcular no Excel 01",
@@ -1086,7 +1110,6 @@
         }
         carregarPlayersWistia();
 
-        // ==================== ARTIGOS ====================
         const artigos = [
             {
                 titulo: "EXCEL AO",
@@ -1155,7 +1178,6 @@
             }, 3000);
         }
 
-        // ==================== MATERIAIS ====================
         const materiais = [
             {
                 titulo: "📥 Planilha 01 - Prática",
@@ -1198,7 +1220,6 @@
             });
         }
 
-        // ==================== DEPOIMENTOS ====================
         const depoimentos = [
             {
                 nome: "Nome do Aluno",
@@ -1234,7 +1255,6 @@
             });
         }
 
-        // ==================== LOJA ====================
         const produtos = [
             {
                 titulo: "ProfOpen",
@@ -1271,7 +1291,6 @@
             });
         }
 
-        // ==================== INICIALIZAÇÃO ====================
         const buscaInput = document.getElementById("busca");
         if (buscaInput) {
             buscaInput.addEventListener("input", (e) => renderizarAulas(e.target.value));
