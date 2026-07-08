@@ -1,0 +1,29 @@
+name: Deploy to Nekoweb
+
+on:
+  push:
+    branches:
+      - main  # Se a sua ramificação principal for "master", altere aqui para master
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v4
+
+      - name: Enviar arquivos para o Nekoweb
+        run: |
+          # Limpa os arquivos antigos no Nekoweb para evitar conflitos
+          curl -X POST https://nekoweb.org/api/site/clear \
+            -H "Authorization: ${{ secrets.NEKOWEB_API_TOKEN }}"
+
+          # Envia todos os arquivos mantendo a estrutura correta de pastas
+          find . -type f -not -path '*/.*' | while read -r file; do
+            relative_path="${file#./}"
+            curl -X POST https://nekoweb.org/api/site/upload \
+              -H "Authorization: ${{ secrets.NEKOWEB_API_TOKEN }}" \
+              -F "pathname=$relative_path" \
+              -F "file=@$file"
+          done
