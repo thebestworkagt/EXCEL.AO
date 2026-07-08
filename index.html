@@ -1042,8 +1042,10 @@
         // ==================== ARTIGOS ====================
         const artigos = [
             {
-                titulo: "📝 Como usar o PROCV no Excel",
-                conteudo: "A função PROCV é uma das mais poderosas do Excel. Ela permite procurar um valor em uma tabela e retornar um resultado correspondente. Para usá-la, você precisa de quatro argumentos: valor_procurado, matriz_tabela, núm_índice_coluna e [procurar_intervalo]. Exemplo: =PROCV(A2;A:B;2;FALSO)."
+                titulo: "Função DATADIF",
+                conteudo: "A função DATADIF é uma das poderosas do Excel. Ela permite comparar a diferença de dias, anos e meses de duas datas
+                "
+             <p> Assista ou solicite a aula sobre ela</p>
             },
             {
                 titulo: "📝 10 Atalhos que vão mudar sua vida",
@@ -1072,7 +1074,7 @@
         // Função para copiar texto
         function copiarTexto(texto) {
             navigator.clipboard.writeText(texto).then(() => {
-                mostrarToast('✅ Texto copiado para a área de transferência!');
+                mostrarToast('Texto copiado para a área de transferência!');
             }).catch(() => {
                 // Fallback
                 const input = document.createElement('textarea');
@@ -1081,7 +1083,7 @@
                 input.select();
                 document.execCommand('copy');
                 document.body.removeChild(input);
-                mostrarToast('✅ Texto copiado!');
+                mostrarToast('Texto copiado!');
             });
         }
 
