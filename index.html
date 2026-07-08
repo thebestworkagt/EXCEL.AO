@@ -914,16 +914,20 @@
             if (tabId === 'menu') {
                 renderizarAulas();
             }
+        }
 
-            // ==================== ATUALIZAR A URL ====================
+        // ==================== FUNÇÃO PARA ATUALIZAR A URL ====================
+        function atualizarUrl(tabId) {
             const newUrl = window.location.origin + '/' + tabId;
             window.history.pushState({ tab: tabId }, '', newUrl);
         }
 
+        // ==================== EVENTO DE CLIQUE NAS ABAS ====================
         tabs.forEach(tab => {
             tab.addEventListener('click', (e) => {
                 const tabId = tab.getAttribute('data-tab');
                 activateTab(tabId);
+                atualizarUrl(tabId);
             });
         });
 
@@ -950,14 +954,28 @@
         }
 
         window.addEventListener('load', abrirAbaPorUrl);
+
+        // ==================== BOTÃO VOLTAR DO NAVEGADOR ====================
         window.addEventListener('popstate', function(event) {
             if (event.state && event.state.tab) {
                 activateTab(event.state.tab);
             } else {
-                abrirAbaPorUrl();
+                // Se não houver estado, tenta ler da URL
+                let path = window.location.pathname;
+                let abaId = path.replace(/^\//, '').split('/')[0];
+                if (abaId === '' || abaId === 'EXCEL.AO' || abaId === 'index.html') {
+                    abaId = 'menu';
+                }
+                const abasValidas = ['menu', 'sobre', 'artigos', 'materiais', 'depoimentos', 'loja', 'apoiar'];
+                if (abasValidas.includes(abaId)) {
+                    activateTab(abaId);
+                } else {
+                    activateTab('menu');
+                }
             }
         });
 
+        // ==================== AULAS (WISTIA) ====================
         const aulas = [
             {
                 titulo: "📉 Regras para calcular no Excel 01",
@@ -1105,12 +1123,10 @@
             });
         }
 
-        // Função para copiar texto
         function copiarTexto(texto) {
             navigator.clipboard.writeText(texto).then(() => {
                 mostrarToast('Texto copiado para a área de transferência!');
             }).catch(() => {
-                // Fallback
                 const input = document.createElement('textarea');
                 input.value = texto;
                 document.body.appendChild(input);
@@ -1121,7 +1137,6 @@
             });
         }
 
-        // Função para mostrar notificação
         function mostrarToast(mensagem) {
             const toast = document.createElement('div');
             toast.style.cssText = `
@@ -1147,6 +1162,7 @@
             }, 3000);
         }
 
+        // ==================== MATERIAIS ====================
         const materiais = [
             {
                 titulo: "📥 Planilha 01 - Prática",
@@ -1189,6 +1205,7 @@
             });
         }
 
+        // ==================== DEPOIMENTOS ====================
         const depoimentos = [
             {
                 nome: "Nome do Aluno",
@@ -1224,6 +1241,7 @@
             });
         }
 
+        // ==================== LOJA ====================
         const produtos = [
             {
                 titulo: "ProfOpen",
@@ -1260,6 +1278,7 @@
             });
         }
 
+        // ==================== INICIALIZAÇÃO ====================
         const buscaInput = document.getElementById("busca");
         if (buscaInput) {
             buscaInput.addEventListener("input", (e) => renderizarAulas(e.target.value));
