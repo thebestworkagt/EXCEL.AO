@@ -3,7 +3,7 @@ name: Deploy to Nekoweb
 on:
   push:
     branches:
-      - main  # Se a sua ramificação principal for "master", altere aqui para master
+      - master  # Se a sua ramificação principal for "master", altere aqui para master
 
 jobs:
   deploy:
