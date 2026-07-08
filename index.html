@@ -892,6 +892,7 @@
             apoiar: document.getElementById('apoiar')
         };
 
+        // ==================== FUNÇÃO PRINCIPAL ====================
         function activateTab(tabId) {
             Object.values(contents).forEach(content => {
                 if (content) content.classList.remove('active-tab');
@@ -913,6 +914,10 @@
             if (tabId === 'menu') {
                 renderizarAulas();
             }
+
+            // ==================== ATUALIZAR A URL ====================
+            const newUrl = window.location.origin + '/' + tabId;
+            window.history.pushState({ tab: tabId }, '', newUrl);
         }
 
         tabs.forEach(tab => {
@@ -920,6 +925,37 @@
                 const tabId = tab.getAttribute('data-tab');
                 activateTab(tabId);
             });
+        });
+
+        // ==================== LER URL E ABRIR ABA CORRETA ====================
+        function abrirAbaPorUrl() {
+            let path = window.location.pathname;
+            let abaId = path.replace(/^\//, '').split('/')[0];
+            
+            // Remove possíveis extensões ou parâmetros
+            abaId = abaId.replace(/\.html$/, '').replace(/\?.*$/, '');
+            
+            // Se estiver vazio ou for o nome do repositório, abre o menu
+            if (abaId === '' || abaId === 'EXCEL.AO' || abaId === 'index.html') {
+                abaId = 'menu';
+            }
+            
+            // Verifica se a aba existe
+            const abasValidas = ['menu', 'sobre', 'artigos', 'materiais', 'depoimentos', 'loja', 'apoiar'];
+            if (abasValidas.includes(abaId)) {
+                activateTab(abaId);
+            } else {
+                activateTab('menu');
+            }
+        }
+
+        window.addEventListener('load', abrirAbaPorUrl);
+        window.addEventListener('popstate', function(event) {
+            if (event.state && event.state.tab) {
+                activateTab(event.state.tab);
+            } else {
+                abrirAbaPorUrl();
+            }
         });
 
         const aulas = [
