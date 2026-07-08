@@ -3,7 +3,8 @@ name: Deploy to Nekoweb
 on:
   push:
     branches:
-      - master  # Se a sua ramificação principal for "master", altere aqui para master
+      - main
+      - master  # Funciona automaticamente em qualquer uma das duas
 
 jobs:
   deploy:
@@ -15,15 +16,28 @@ jobs:
 
       - name: Enviar arquivos para o Nekoweb
         run: |
-          # Limpa os arquivos antigos no Nekoweb para evitar conflitos
+          # 1. Limpa o site antigo para receber os novos arquivos
           curl -X POST https://nekoweb.org/api/site/clear \
             -H "Authorization: ${{ secrets.NEKOWEB_API_TOKEN }}"
 
-          # Envia todos os arquivos mantendo a estrutura correta de pastas
-          find . -type f -not -path '*/.*' | while read -r file; do
-            relative_path="${file#./}"
+          # 2. Envia o arquivo principal obrigatoriamente
+          if [ -f index.html ]; then
             curl -X POST https://nekoweb.org/api/site/upload \
               -H "Authorization: ${{ secrets.NEKOWEB_API_TOKEN }}" \
-              -F "pathname=$relative_path" \
-              -F "file=@$file"
+              -F "pathname=index.html" \
+              -F "file=@index.html"
+          fi
+
+          # 3. Envia todos os outros arquivos visíveis do repositório
+          find . -maxdepth 3 -type f ! -path '*/.*' | while read -r file; do
+            # Remove o './' do início do caminho
+            clean_path=$(echo "$file" | sed 's|^\./||')
+            
+            # Evita reenviar o index.html que já foi enviado acima
+            if [ "$clean_path" != "index.html" ]; then
+              curl -X POST https://nekoweb.org/api/site/upload \
+                -H "Authorization: ${{ secrets.NEKOWEB_API_TOKEN }}" \
+                -F "pathname=$clean_path" \
+                -F "file=@$file"
+            fi
           done
